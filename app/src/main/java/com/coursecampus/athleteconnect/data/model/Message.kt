@@ -7,9 +7,12 @@ data class Message(
     val senderId: String,
     val receiverId: String,
     val content: String,
-    val timestamp: Date,
+    val timestamp: String,
     val isRead: Boolean = false,
-    val messageType: MessageType = MessageType.TEXT
+    val messageType: MessageType = MessageType.TEXT,
+    val senderName: String = "",
+    val mediaUrl: String = "",
+    val replyTo: String? = null
 )
 
 enum class MessageType {
@@ -19,7 +22,9 @@ enum class MessageType {
 data class Conversation(
     val id: String,
     val participantIds: List<String>,
+    val participants: List<String>,
     val lastMessage: Message?,
     val unreadCount: Int = 0,
-    val isActive: Boolean = true
+    val isActive: Boolean = true,
+    val lastActivity: String = ""
 )

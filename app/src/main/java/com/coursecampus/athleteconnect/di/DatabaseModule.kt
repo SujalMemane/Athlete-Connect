@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.coursecampus.athleteconnect.data.local.FitnessLabDatabase
 import com.coursecampus.athleteconnect.data.local.dao.*
+import com.coursecampus.athleteconnect.data.repository.TestResultRepositoryImpl
+import com.coursecampus.athleteconnect.domain.repository.TestResultRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,6 +65,12 @@ object DatabaseModule {
     @Provides
     fun provideAchievementDao(database: FitnessLabDatabase): AchievementDao {
         return database.achievementDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestResultRepository(): TestResultRepository {
+        return TestResultRepositoryImpl()
     }
 }
 

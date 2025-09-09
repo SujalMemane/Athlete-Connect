@@ -12,11 +12,12 @@ fun MessageEntity.toDomain(): Message {
     return Message(
         id = id,
         senderId = senderId,
+        receiverId = receiverId,
         senderName = senderName,
         content = content,
         timestamp = timestamp,
-        read = read,
-        type = MessageType.valueOf(type),
+        isRead = read,
+        messageType = MessageType.valueOf(type),
         mediaUrl = mediaUrl,
         replyTo = replyTo
     )
@@ -27,11 +28,12 @@ fun Message.toEntity(conversationId: String): MessageEntity {
         id = id,
         conversationId = conversationId,
         senderId = senderId,
+        receiverId = receiverId,
         senderName = senderName,
         content = content,
         timestamp = timestamp,
-        read = read,
-        type = type.name,
+        read = isRead,
+        type = messageType.name,
         mediaUrl = mediaUrl,
         replyTo = replyTo
     )
@@ -48,6 +50,7 @@ fun ConversationEntity.toDomain(): Conversation {
     
     return Conversation(
         id = id,
+        participantIds = participants,
         participants = participants,
         lastMessage = null, // Will be populated separately
         unreadCount = unreadCount,
@@ -61,6 +64,7 @@ fun Conversation.toEntity(): ConversationEntity {
     
     return ConversationEntity(
         id = id,
+        participantIds = participantsJson,
         participants = participantsJson,
         lastMessageId = lastMessage?.id,
         unreadCount = unreadCount,

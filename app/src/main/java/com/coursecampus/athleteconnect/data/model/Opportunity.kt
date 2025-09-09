@@ -9,13 +9,18 @@ data class Opportunity(
     val type: OpportunityType,
     val sport: String,
     val location: String,
-    val deadline: Date,
+    val deadline: String,
     val requirements: List<String>,
-    val isApplied: Boolean = false,
+    val applied: Boolean = false,
     val organization: String = "",
-    val contactEmail: String = ""
+    val contactEmail: String = "",
+    val salary: String = "",
+    val duration: String = "",
+    val imageUrl: String = "",
+    val website: String = "",
+    val benefits: List<String> = emptyList()
 )
 
 enum class OpportunityType {
-    SCHOLARSHIP, TRIAL, CAMP, JOB, COMPETITION
+    SCHOLARSHIP, TRIAL, CAMP, JOB, COMPETITION, INTERNSHIP
 }

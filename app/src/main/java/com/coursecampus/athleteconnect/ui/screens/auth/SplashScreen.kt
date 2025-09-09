@@ -2,6 +2,7 @@ package com.coursecampus.athleteconnect.ui.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,8 +12,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
+import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.ui.theme.FitnessPrimary
 import kotlinx.coroutines.delay
 

@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey
 data class TestResultEntity(
     @PrimaryKey
     val id: String,
+    val athleteId: String,
     val testName: String,
     val score: Double,
     val unit: String,
     val date: String,
     val percentile: Int,
     val category: String,
-    val athleteId: String = "",
-    val notes: String = "",
-    val isPersonalBest: Boolean = false
+    val videoUrl: String = "",
+    val notes: String = ""
 )

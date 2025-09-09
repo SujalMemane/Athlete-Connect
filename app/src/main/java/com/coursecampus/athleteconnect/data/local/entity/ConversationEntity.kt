@@ -8,7 +8,8 @@ data class ConversationEntity(
     @PrimaryKey
     val id: String,
     val participantIds: String, // JSON string of participant IDs
+    val participants: String, // JSON string of participant IDs
     val lastMessageId: String?,
-    val unreadCount: Int = 0,
-    val isActive: Boolean = true
+    val unreadCount: Int,
+    val lastActivity: String
 )

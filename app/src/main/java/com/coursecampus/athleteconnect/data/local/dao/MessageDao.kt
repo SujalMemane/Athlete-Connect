@@ -1,7 +1,6 @@
 package com.coursecampus.athleteconnect.data.local.dao
 
 import androidx.room.*
-import com.coursecampus.athleteconnect.data.local.entity.ConversationEntity
 import com.coursecampus.athleteconnect.data.local.entity.MessageEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -38,30 +37,4 @@ interface MessageDao {
     suspend fun deleteMessagesByConversation(conversationId: String)
 }
 
-@Dao
-interface ConversationDao {
-    @Query("SELECT * FROM conversations ORDER BY lastActivity DESC")
-    fun getAllConversations(): Flow<List<ConversationEntity>>
-
-    @Query("SELECT * FROM conversations WHERE id = :id")
-    suspend fun getConversationById(id: String): ConversationEntity?
-
-    @Query("SELECT * FROM conversations WHERE participants LIKE '%' || :userId || '%'")
-    fun getConversationsByUser(userId: String): Flow<List<ConversationEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertConversation(conversation: ConversationEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertConversations(conversations: List<ConversationEntity>)
-
-    @Update
-    suspend fun updateConversation(conversation: ConversationEntity)
-
-    @Delete
-    suspend fun deleteConversation(conversation: ConversationEntity)
-
-    @Query("UPDATE conversations SET unreadCount = :count WHERE id = :id")
-    suspend fun updateUnreadCount(id: String, count: Int)
-}
 

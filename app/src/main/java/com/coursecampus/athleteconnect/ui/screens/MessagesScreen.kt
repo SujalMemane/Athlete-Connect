@@ -28,60 +28,68 @@ fun MessagesScreen() {
         listOf(
             Conversation(
                 id = "1",
+                participantIds = listOf("current_user", "alex_johnson"),
                 participants = listOf("current_user", "alex_johnson"),
                 lastMessage = Message(
                     id = "1",
                     senderId = "alex_johnson",
+                    receiverId = "current_user",
                     senderName = "Alex Johnson",
                     content = "Hey! Great performance at the track meet yesterday!",
                     timestamp = "2 hours ago",
-                    read = false,
-                    type = MessageType.TEXT
+                    isRead = false,
+                    messageType = MessageType.TEXT
                 ),
                 unreadCount = 2,
                 lastActivity = "2 hours ago"
             ),
             Conversation(
                 id = "2",
+                participantIds = listOf("current_user", "sarah_williams"),
                 participants = listOf("current_user", "sarah_williams"),
                 lastMessage = Message(
                     id = "2",
                     senderId = "sarah_williams",
+                    receiverId = "current_user",
                     senderName = "Sarah Williams",
                     content = "Thanks for the training tips!",
                     timestamp = "1 day ago",
-                    read = true,
-                    type = MessageType.TEXT
+                    isRead = true,
+                    messageType = MessageType.TEXT
                 ),
                 unreadCount = 0,
                 lastActivity = "1 day ago"
             ),
             Conversation(
                 id = "3",
+                participantIds = listOf("current_user", "mike_davis"),
                 participants = listOf("current_user", "mike_davis"),
                 lastMessage = Message(
                     id = "3",
                     senderId = "mike_davis",
+                    receiverId = "current_user",
                     senderName = "Mike Davis",
                     content = "Are you going to the basketball camp next week?",
                     timestamp = "3 days ago",
-                    read = true,
-                    type = MessageType.TEXT
+                    isRead = true,
+                    messageType = MessageType.TEXT
                 ),
                 unreadCount = 0,
                 lastActivity = "3 days ago"
             ),
             Conversation(
                 id = "4",
+                participantIds = listOf("current_user", "coach_martinez"),
                 participants = listOf("current_user", "coach_martinez"),
                 lastMessage = Message(
                     id = "4",
                     senderId = "coach_martinez",
+                    receiverId = "current_user",
                     senderName = "Coach Martinez",
                     content = "Your test results look great! Keep up the good work.",
                     timestamp = "1 week ago",
-                    read = true,
-                    type = MessageType.TEXT
+                    isRead = true,
+                    messageType = MessageType.TEXT
                 ),
                 unreadCount = 0,
                 lastActivity = "1 week ago"
@@ -250,29 +258,32 @@ fun ChatScreen(
             Message(
                 id = "1",
                 senderId = "alex_johnson",
+                receiverId = "current_user",
                 senderName = "Alex Johnson",
                 content = "Hey! Great performance at the track meet yesterday!",
                 timestamp = "2:30 PM",
-                read = true,
-                type = MessageType.TEXT
+                isRead = true,
+                messageType = MessageType.TEXT
             ),
             Message(
                 id = "2",
                 senderId = "current_user",
+                receiverId = "alex_johnson",
                 senderName = "You",
                 content = "Thanks! Your 40-yard dash time was incredible too!",
                 timestamp = "2:32 PM",
-                read = true,
-                type = MessageType.TEXT
+                isRead = true,
+                messageType = MessageType.TEXT
             ),
             Message(
                 id = "3",
                 senderId = "alex_johnson",
+                receiverId = "current_user",
                 senderName = "Alex Johnson",
                 content = "We should train together sometime. I know some great drills.",
                 timestamp = "2:35 PM",
-                read = false,
-                type = MessageType.TEXT
+                    isRead = false,
+                    messageType = MessageType.TEXT
             )
         )
     }

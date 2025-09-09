@@ -210,8 +210,9 @@ private fun TestCard(
                 Surface(
                     color = when (test.difficulty) {
                         Difficulty.BEGINNER -> Color.Green.copy(alpha = 0.1f)
-                        Difficulty.INTERMEDIATE -> Color.Orange.copy(alpha = 0.1f)
+                        Difficulty.INTERMEDIATE -> Color(0xFFFF9800).copy(alpha = 0.1f)
                         Difficulty.ADVANCED -> Color.Red.copy(alpha = 0.1f)
+                        Difficulty.EXPERT -> Color(0xFF9C27B0).copy(alpha = 0.1f)
                     },
                     shape = RoundedCornerShape(8.dp)
                 ) {
@@ -221,8 +222,9 @@ private fun TestCard(
                         style = MaterialTheme.typography.labelMedium,
                         color = when (test.difficulty) {
                             Difficulty.BEGINNER -> Color.Green
-                            Difficulty.INTERMEDIATE -> Color.Orange
+                            Difficulty.INTERMEDIATE -> Color(0xFFFF9800)
                             Difficulty.ADVANCED -> Color.Red
+                            Difficulty.EXPERT -> Color(0xFF9C27B0)
                         },
                         fontWeight = FontWeight.Medium
                     )
@@ -287,14 +289,14 @@ private fun TestResultCard(
                 )
                 if (result.isPersonalBest) {
                     Surface(
-                        color = Color.Gold.copy(alpha = 0.1f),
+                        color = Color(0xFFFFD700).copy(alpha = 0.1f),
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Text(
                             text = "PB",
                             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color.Gold,
+                            color = Color(0xFFFFD700),
                             fontWeight = FontWeight.Bold
                         )
                     }

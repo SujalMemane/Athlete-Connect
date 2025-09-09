@@ -64,28 +64,31 @@ fun ProfileScreen() {
                 id = "1",
                 title = "Speed Demon",
                 description = "Complete 10 speed tests with 90%+ percentile",
-                iconUrl = "",
+                icon = "🏃‍♂️",
                 category = "Speed",
                 unlockedDate = "2024-01-10",
-                rarity = Rarity.RARE
+                rarity = Rarity.RARE,
+                athleteId = "current_user"
             ),
             Achievement(
                 id = "2",
                 title = "Jump Master",
                 description = "Achieve 35+ inch vertical jump",
-                iconUrl = "",
+                icon = "🏃‍♂️",
                 category = "Power",
                 unlockedDate = "2024-01-08",
-                rarity = Rarity.EPIC
+                rarity = Rarity.EPIC,
+                athleteId = "current_user"
             ),
             Achievement(
                 id = "3",
                 title = "Strength Champion",
                 description = "Bench press 200+ lbs",
-                iconUrl = "",
+                icon = "🏃‍♂️",
                 category = "Strength",
                 unlockedDate = "2024-01-05",
-                rarity = Rarity.UNCOMMON
+                rarity = Rarity.COMMON,
+                athleteId = "current_user"
             )
         )
     }

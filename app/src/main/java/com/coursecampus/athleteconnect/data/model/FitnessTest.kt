@@ -1,7 +1,7 @@
 package com.coursecampus.athleteconnect.data.model
 
 enum class Difficulty {
-    BEGINNER, INTERMEDIATE, ADVANCED
+    BEGINNER, INTERMEDIATE, ADVANCED, EXPERT
 }
 
 data class FitnessTest(

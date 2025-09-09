@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey
 data class AchievementEntity(
     @PrimaryKey
     val id: String,
+    val athleteId: String,
     val title: String,
     val description: String,
-    val icon: String,
-    val isUnlocked: Boolean = false,
-    val unlockedDate: String? = null,
-    val athleteId: String
+    val iconUrl: String,
+    val category: String,
+    val unlockedDate: String,
+    val rarity: String
 )

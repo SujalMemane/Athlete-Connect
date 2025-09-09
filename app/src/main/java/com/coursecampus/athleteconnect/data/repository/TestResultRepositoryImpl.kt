@@ -18,8 +18,8 @@ class TestResultRepositoryImpl @Inject constructor(
         return flowOf(mockResults)
     }
     
-    override fun getTestResultsByAthlete(athleteId: String): Flow<List<TestResult>> {
-        return flowOf(mockResults.filter { it.athleteId == athleteId })
+    override suspend fun getTestResultById(id: String): TestResult? {
+        return mockResults.find { it.id == id }
     }
     
     override fun getTestResultsByCategory(category: String): Flow<List<TestResult>> {
@@ -30,11 +30,11 @@ class TestResultRepositoryImpl @Inject constructor(
         mockResults.add(0, testResult) // Add to beginning
     }
     
-    override suspend fun deleteTestResult(testResultId: String) {
-        mockResults.removeAll { it.id == testResultId }
+    override suspend fun deleteTestResult(testResult: TestResult) {
+        mockResults.removeAll { it.id == testResult.id }
     }
     
-    override suspend fun getPersonalBests(athleteId: String): Flow<List<TestResult>> {
+    override fun getPersonalBests(athleteId: String): Flow<List<TestResult>> {
         val personalBests = mutableMapOf<String, TestResult>()
         
         mockResults.filter { it.athleteId == athleteId }.forEach { result ->

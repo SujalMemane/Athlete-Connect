@@ -8,10 +8,14 @@ import java.util.Date
 data class MessageEntity(
     @PrimaryKey
     val id: String,
+    val conversationId: String,
     val senderId: String,
     val receiverId: String,
+    val senderName: String,
     val content: String,
-    val timestamp: Long, // Date as timestamp
-    val isRead: Boolean = false,
-    val messageType: String = "TEXT" // MessageType as string
+    val timestamp: String,
+    val read: Boolean,
+    val type: String,
+    val mediaUrl: String = "",
+    val replyTo: String? = null
 )

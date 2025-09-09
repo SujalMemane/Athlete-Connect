@@ -16,7 +16,6 @@ import com.coursecampus.athleteconnect.data.local.entity.LeaderboardEntryEntity
 import com.coursecampus.athleteconnect.data.local.entity.OpportunityEntity
 import com.coursecampus.athleteconnect.data.local.entity.MessageEntity
 import com.coursecampus.athleteconnect.data.local.entity.ConversationEntity
-import com.coursecampus.athleteconnect.data.local.entity.TestResultEntity
 
 @Database(
     entities = [

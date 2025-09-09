@@ -10,5 +10,6 @@ data class TestResult(
     val category: String,
     val athleteId: String = "",
     val notes: String = "",
-    val isPersonalBest: Boolean = false
+    val isPersonalBest: Boolean = false,
+    val videoUrl: String = ""
 )
