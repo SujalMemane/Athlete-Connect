@@ -1,0 +1,14 @@
+%% Main App Navigation Flow
+flowchart LR
+  H[Home] --> Opp[Opportunities List]
+  H --> Tests[Tests List]
+  H --> Msg[Messages List]
+  H --> Ldb[Leaderboard]
+  H --> Prof[Profile/Settings]
+
+  Opp --> OppD[Opportunity Detail] --> Opp
+  Tests --> TDet[Test Detail] --> Mode[Mode Select] --> Live[Live Assessment] --> Res[Results Summary] --> Tests
+  Msg --> Chat[Conversation] --> Msg
+  Ldb --> Player[Player Detail] --> Ldb
+  Prof --> Set[Settings] --> Prof
+
