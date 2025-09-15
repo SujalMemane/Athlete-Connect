@@ -3,7 +3,7 @@ package com.coursecampus.athleteconnect.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // Primary Colors - Athlete Connect Blue Theme
-val FitnessPrimary = Color(0xFF1976D2) // Primary Blue
+val FitnessPrimary = Color(0xFF009DFF) // Primary Blue
 val FitnessPrimaryVariant = Color(0xFF1565C0) // Darker Blue
 val FitnessSecondary = Color(0xFF1976D2) // Blue (matching primary)
 val FitnessSecondaryVariant = Color(0xFF1565C0) // Darker Blue

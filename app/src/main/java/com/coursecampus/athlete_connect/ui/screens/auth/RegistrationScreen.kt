@@ -38,7 +38,7 @@ fun RegistrationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -56,15 +56,14 @@ fun RegistrationScreen(
         // Header
         Text(
             text = "Create Account",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = "Join the athlete community",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.Gray,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             modifier = Modifier.padding(top = 8.dp)
         )
         
@@ -74,16 +73,16 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
-            placeholder = { Text("Enter your email") },
+            label = { Text("Email", color = MaterialTheme.colorScheme.onBackground) },
+            placeholder = { Text("Enter your email", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = FitnessPrimary,
-                focusedLabelColor = FitnessPrimary,
-                unfocusedBorderColor = Color.Gray.copy(alpha = 0.3f),
-                unfocusedLabelColor = Color.Gray
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
         )
         
@@ -93,8 +92,8 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            placeholder = { Text("Enter your password") },
+            label = { Text("Password", color = MaterialTheme.colorScheme.onBackground) },
+            placeholder = { Text("Enter your password", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -104,15 +103,15 @@ fun RegistrationScreen(
                     Icon(
                         imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                         contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                        tint = Color.Gray
+                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                     )
                 }
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = FitnessPrimary,
-                focusedLabelColor = FitnessPrimary,
-                unfocusedBorderColor = Color.Gray.copy(alpha = 0.3f),
-                unfocusedLabelColor = Color.Gray
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
         )
         
@@ -122,8 +121,8 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text("Confirm Password") },
-            placeholder = { Text("Confirm your password") },
+            label = { Text("Confirm Password", color = MaterialTheme.colorScheme.onBackground) },
+            placeholder = { Text("Confirm your password", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -133,15 +132,15 @@ fun RegistrationScreen(
                     Icon(
                         imageVector = if (confirmPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                         contentDescription = if (confirmPasswordVisible) "Hide password" else "Show password",
-                        tint = Color.Gray
+                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                     )
                 }
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = FitnessPrimary,
-                focusedLabelColor = FitnessPrimary,
-                unfocusedBorderColor = Color.Gray.copy(alpha = 0.3f),
-                unfocusedLabelColor = Color.Gray
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
         )
         
@@ -155,14 +154,15 @@ fun RegistrationScreen(
                 .height(56.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = FitnessPrimary
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             enabled = email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
         ) {
             Text(
                 text = "Create Account",
-                color = Color.White,
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -176,57 +176,45 @@ fun RegistrationScreen(
         ) {
             HorizontalDivider(
                 modifier = Modifier.weight(1f),
-                color = Color.Gray.copy(alpha = 0.3f)
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
             )
             Text(
                 text = "or continue with",
                 modifier = Modifier.padding(horizontal = 16.dp),
-                color = Color.Gray,
-                fontSize = 14.sp
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.bodyMedium
             )
             HorizontalDivider(
                 modifier = Modifier.weight(1f),
-                color = Color.Gray.copy(alpha = 0.3f)
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
             )
         }
-        
+
         Spacer(modifier = Modifier.height(24.dp))
-        
-        // Social Login Buttons
-        SocialLoginButton(
-            text = "Continue with Apple",
-            onClick = { onSocialSignIn("apple") },
-            backgroundColor = Color.Black,
-            textColor = Color.White
-        )
-        
-        Spacer(modifier = Modifier.height(12.dp))
-        
+
+        // Google Login Button (centered, prominent)
         SocialLoginButton(
             text = "Continue with Google",
             onClick = { onSocialSignIn("google") },
-            backgroundColor = Color.White,
-            textColor = Color.Black,
-            borderColor = Color.Gray.copy(alpha = 0.3f)
+            backgroundColor = MaterialTheme.colorScheme.surface,
+            textColor = MaterialTheme.colorScheme.onSurface,
+            borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
         )
-        
-        Spacer(modifier = Modifier.height(12.dp))
-        
-        SocialLoginButton(
-            text = "Continue with Facebook",
-            onClick = { onSocialSignIn("facebook") },
-            backgroundColor = Color(0xFF1877F2),
-            textColor = Color.White
-        )
-        
+
         Spacer(modifier = Modifier.weight(1f))
         
         // Sign In Link
-        TextButton(onClick = onNavigateToSignIn) {
+        TextButton(onClick = onNavigateToSignIn,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f), RoundedCornerShape(12.dp))
+                .padding(vertical = 12.dp)
+        ) {
             Text(
                 text = "Already have an account? Sign In",
-                color = Color.Black,
-                fontSize = 16.sp
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold
             )
         }
         
