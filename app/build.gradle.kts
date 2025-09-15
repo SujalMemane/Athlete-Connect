@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.coursecampus.athlete_connect"
+    namespace = "com.coursecampus.athleteconnect"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.coursecampus.athlete_connect"
+        applicationId = "com.coursecampus.athleteconnect"
         minSdk = 29
         targetSdk = 36
         versionCode = 1
@@ -38,6 +38,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 

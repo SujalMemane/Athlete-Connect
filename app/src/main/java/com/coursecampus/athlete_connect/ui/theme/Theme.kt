@@ -1,4 +1,5 @@
-package com.coursecampus.athlete_connect.ui.theme
+package com.coursecampus.athleteconnect.ui.theme
+
 
 import android.app.Activity
 import android.os.Build
@@ -9,29 +10,90 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = FitnessPrimaryDark,
+    onPrimary = FitnessOnPrimaryDark,
+    primaryContainer = FitnessPrimaryVariantDark,
+    onPrimaryContainer = FitnessOnPrimaryDark,
+    secondary = FitnessSecondaryDark,
+    onSecondary = FitnessOnSecondaryDark,
+    secondaryContainer = FitnessSecondaryVariantDark,
+    onSecondaryContainer = FitnessOnSecondaryDark,
+    tertiary = FitnessInfo,
+    onTertiary = FitnessOnPrimaryDark,
+    background = FitnessBackgroundDark,
+    onBackground = FitnessOnBackgroundDark,
+    surface = FitnessSurfaceDark,
+    onSurface = FitnessOnSurfaceDark,
+    surfaceVariant = FitnessSurfaceVariantDark,
+    onSurfaceVariant = FitnessOnSurfaceDark,
+    error = FitnessError,
+    onError = FitnessOnPrimaryDark,
+    errorContainer = FitnessError,
+    onErrorContainer = FitnessOnPrimaryDark
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = FitnessPrimary,
+    onPrimary = FitnessOnPrimary,
+    primaryContainer = FitnessPrimaryVariant,
+    onPrimaryContainer = FitnessOnPrimary,
+    secondary = FitnessSecondary,
+    onSecondary = FitnessOnSecondary,
+    secondaryContainer = FitnessSecondaryVariant,
+    onSecondaryContainer = FitnessOnSecondary,
+    tertiary = FitnessInfo,
+    onTertiary = FitnessOnPrimary,
+    background = FitnessBackground,
+    onBackground = FitnessOnBackground,
+    surface = FitnessSurface,
+    onSurface = FitnessOnSurface,
+    surfaceVariant = FitnessSurfaceVariant,
+    onSurfaceVariant = FitnessOnSurface,
+    error = FitnessError,
+    onError = FitnessOnPrimary,
+    errorContainer = FitnessError,
+    onErrorContainer = FitnessOnPrimary
 )
+
+@Composable
+fun Athlete_ConnectTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = false, // Disabled to use custom fitness theme
+    content: @Composable () -> Unit
+) {
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        }
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = FitnessTypography,
+        content = content
+    )
+}
 
 @Composable
 fun AthleteConnectTheme(
@@ -52,7 +114,7 @@ fun AthleteConnectTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = FitnessTypography,
         content = content
     )
 }
