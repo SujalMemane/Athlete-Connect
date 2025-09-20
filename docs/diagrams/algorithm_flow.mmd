@@ -1,0 +1,40 @@
+%% Algorithm Flow (Athlete ↔ Opportunity Relevancy)
+flowchart LR
+  subgraph Profiles[ ]
+    E[Experts\nProfile]
+    C[Candidate\nProfile]
+    I[Interview\nSubject]
+  end
+  E --> DC[Data collection]
+  C --> DC
+  I --> DC
+  DC --> DP[Data Processing]
+
+  %% Preprocessing bubbles
+  subgraph Pre[ ]
+    direction TB
+    DCL((Data\nCleaning))
+    TOK((Tokenize\ndata))
+    STEM((Stemming/\nLemmatization))
+  end
+  DCL -.-> DP
+  TOK -.-> DP
+  STEM -.-> DP
+
+  DP --> KE[Keyword extraction using\nTF‑IDF algorithm]
+  KE --> RS[Relevancy score\ncalculation]
+
+  CS1[Cosine Similarity between\nExpert profile & Interview subject]
+  RS --> CS1
+  CS1 --> PG[Panel Generation]
+
+  QS[Questionnaire System for\nexpert and candidates]
+  KE --> QS
+  CS2[Cosine Similarity between\nExpert profile & Candidate profile]
+  QS --> CS2
+  CS2 --> ASG[Candidate assignment to the panels\nbased on relevancy score]
+
+  PG --> ASG
+  ASG --> INT[Interview Conduction &\nCandidate evaluation]
+  INT --> REP[Report generation]
+

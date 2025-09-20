@@ -1,0 +1,15 @@
+%% Auth + Role Routing Flow
+flowchart TB
+  S[Splash / Init] --> RC{Role known?}
+  RC -- No --> R[Choose Role\nAthlete | Coach/Org]
+  RC -- Yes --> A1[Auth by role]
+
+  R --> A1[Auth by role\nEmail/OTP/Social]
+
+  A1 --> CK{Coach/Org?}
+  CK -- Athlete --> P1[Permissions\nCamera/Notifications]
+  CK -- Coach/Org --> D1[Org Dashboard]
+
+  P1 --> H1[Athlete Home/Dashboard]
+  D1 -->|nav| H2[Org Sections\n(Opportunities, Panels, Reports)]
+

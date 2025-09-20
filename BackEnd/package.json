@@ -1,0 +1,12 @@
+{
+  "name": "smart-india-hakethon",
+  "version": "1.0.0",
+  "description": "**Complete AI-Powered Sports Assessment System for Smart India Hackathon**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
