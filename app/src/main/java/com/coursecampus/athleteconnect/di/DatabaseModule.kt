@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.coursecampus.athleteconnect.data.local.FitnessLabDatabase
 import com.coursecampus.athleteconnect.data.local.dao.*
 import com.coursecampus.athleteconnect.data.repository.TestResultRepositoryImpl
+import com.coursecampus.athleteconnect.data.repository.AthleteRepositoryImpl
+import com.coursecampus.athleteconnect.domain.repository.AthleteRepository
 import com.coursecampus.athleteconnect.domain.repository.TestResultRepository
 import dagger.Module
 import dagger.Provides
@@ -71,6 +73,15 @@ object DatabaseModule {
     @Singleton
     fun provideTestResultRepository(): TestResultRepository {
         return TestResultRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAthleteRepository(
+        athleteDao: AthleteDao,
+        mock: com.coursecampus.athleteconnect.data.mock.MockDataProvider
+    ): AthleteRepository {
+        return AthleteRepositoryImpl(athleteDao, mock)
     }
 }
 

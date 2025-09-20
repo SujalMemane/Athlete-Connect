@@ -25,7 +25,9 @@ import com.coursecampus.athleteconnect.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    navController: androidx.navigation.NavController = androidx.navigation.compose.rememberNavController()
+) {
     val currentUser = remember {
         Athlete(
             id = "current_user",
@@ -99,43 +101,19 @@ fun ProfileScreen() {
             .background(MaterialTheme.colorScheme.background)
     ) {
         item {
-            // Profile Header
+            // Header + Overlapping Info Card
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp)
+                modifier = Modifier.fillMaxWidth()
             ) {
-                // Cover Photo
-                AsyncImage(
-                    model = currentUser.coverPhoto,
-                    contentDescription = "Cover photo",
+                // Cover header
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(GradientStart, GradientEnd)
-                            )
-                        ),
-                    contentScale = ContentScale.Crop
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(GradientStart)
                 )
-                
-                // Profile Picture
-                AsyncImage(
-                    model = currentUser.profilePicture,
-                    contentDescription = "Profile picture",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .align(Alignment.BottomCenter)
-                        .offset(y = 60.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.surface,
-                            shape = CircleShape
-                        )
-                        .padding(4.dp)
-                )
-                
-                // Edit Button
+
+                // Edit button
                 FloatingActionButton(
                     onClick = { /* Edit profile */ },
                     modifier = Modifier
@@ -144,68 +122,72 @@ fun ProfileScreen() {
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit Profile"
-                    )
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Profile")
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(60.dp))
-        }
 
-        item {
-            // Profile Info
-            Column(
+                // Avatar centered
+                AsyncImage(
+                    model = currentUser.profilePicture,
+                    contentDescription = "Profile picture",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .align(Alignment.BottomCenter)
+                        .offset(y = 48.dp)
+                        .background(MaterialTheme.colorScheme.surface, CircleShape)
+                        .padding(6.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            // Info card overlapping the header
+            Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(horizontal = 16.dp)
+                    .offset(y = 48.dp)
+                    .fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Text(
-                    text = currentUser.name,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                
-                Text(
-                    text = "${currentUser.sport} • ${currentUser.location}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-                )
-                
-                if (currentUser.bio.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = currentUser.bio,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                // Stats Row
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 56.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    StatItem(
-                        label = "Age",
-                        value = currentUser.age.toString()
+                    Text(
+                        text = currentUser.name,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     )
-                    StatItem(
-                        label = "Height",
-                        value = currentUser.height
+                    Text(
+                        text = "${'$'}{currentUser.sport} • ${'$'}{currentUser.location}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
-                    StatItem(
-                        label = "Weight",
-                        value = currentUser.weight
-                    )
+                    if (currentUser.bio.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = currentUser.bio,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            maxLines = 2
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        StatItem(label = "Height", value = currentUser.height)
+                        StatItem(label = "Weight", value = currentUser.weight)
+                        StatItem(label = "Age", value = currentUser.age.toString())
+                    }
                 }
             }
+
+            Spacer(modifier = Modifier.height(88.dp))
         }
 
         item {
@@ -213,47 +195,49 @@ fun ProfileScreen() {
         }
 
         item {
-            // Personal Bests
+            // Achievements (horizontal gallery)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
-                    text = "Personal Bests",
+                    text = "Achievements",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(currentUser.personalBests.entries.toList()) { (test, result) ->
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(achievements) { achievement ->
                         Card(
-                            modifier = Modifier.width(140.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.surface
                             ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                            shape = RoundedCornerShape(14.dp)
                         ) {
                             Column(
-                                modifier = Modifier.padding(16.dp),
+                                modifier = Modifier
+                                    .width(120.dp)
+                                    .padding(vertical = 12.dp, horizontal = 10.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text(
-                                    text = test,
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                Icon(
+                                    imageVector = when (achievement.category) {
+                                        "Speed" -> Icons.Default.Speed
+                                        "Power" -> Icons.Default.FitnessCenter
+                                        "Strength" -> Icons.Default.Sports
+                                        else -> Icons.Default.EmojiEvents
+                                    },
+                                    contentDescription = achievement.title,
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(Modifier.height(6.dp))
                                 Text(
-                                    text = result,
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    fontWeight = FontWeight.Bold,
-                                    color = FitnessPrimary
+                                    text = achievement.title,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.SemiBold
                                 )
                             }
                         }
@@ -267,42 +251,128 @@ fun ProfileScreen() {
         }
 
         item {
-            // Achievements
+            // Test Results (list)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
-                    text = "Achievements",
+                    text = "Test Results",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    achievements.forEach { achievement ->
-                        AchievementCard(
-                            title = achievement.title,
-                            description = achievement.description,
-                            icon = when (achievement.category) {
-                                "Speed" -> Icons.Default.Speed
-                                "Power" -> Icons.Default.FitnessCenter
-                                "Strength" -> Icons.Default.Sports
-                                else -> Icons.Default.Star
-                            },
-                            isUnlocked = true
-                        )
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    currentUser.personalBests.entries.forEach { (test, result) ->
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.CheckCircle,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = result,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        text = test,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                                Icon(
+                                    imageVector = Icons.Default.ChevronRight,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
 
         item {
-            Spacer(modifier = Modifier.height(24.dp))
+            // Navigation Buttons
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Test History Button
+                OutlinedButton(
+                    onClick = { navController.navigate("test_history") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = FitnessPrimary
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.History,
+                        contentDescription = "Test History",
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("View Test History")
+                }
+                
+                // Settings Button
+                OutlinedButton(
+                    onClick = { navController.navigate("settings") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = FitnessPrimary
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Settings",
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Settings")
+                }
+                
+                // Leaderboard Button
+                OutlinedButton(
+                    onClick = { navController.navigate("leaderboard") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = FitnessPrimary
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.EmojiEvents,
+                        contentDescription = "Leaderboard",
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("View Leaderboard")
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }

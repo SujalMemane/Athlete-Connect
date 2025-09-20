@@ -29,6 +29,14 @@ import com.coursecampus.athleteconnect.data.model.TestResult
 import com.coursecampus.athleteconnect.ui.theme.FitnessPrimary
 import com.coursecampus.athleteconnect.ui.theme.FitnessError
 import com.coursecampus.athleteconnect.ui.theme.FitnessSecondary
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.coursecampus.athleteconnect.ui.screens.TestsViewModel
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +45,8 @@ fun CameraScreen(
     onBackClick: () -> Unit,
     onTestComplete: (TestResult) -> Unit
 ) {
+    val testsViewModel: TestsViewModel = hiltViewModel()
+    val cameraExecutor: ExecutorService = remember { Executors.newSingleThreadExecutor() }
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     
@@ -74,6 +84,9 @@ fun CameraScreen(
         currentPhase = "Running"
         testReps = 0
         testScore = 0.0
+
+        // Start backend session exactly when user presses Start
+        testsViewModel.startTest(fitnessTest)
     }
     
     fun stopTest() {
@@ -158,7 +171,8 @@ fun CameraScreen(
             ) {
                 CameraPreview(
                     modifier = Modifier.fillMaxSize(),
-                    lifecycleOwner = lifecycleOwner
+                    lifecycleOwner = lifecycleOwner,
+                    cameraExecutor = cameraExecutor
                 )
                 
                 // Test Instructions Overlay
@@ -387,44 +401,31 @@ fun CameraScreen(
 @Composable
 private fun CameraPreview(
     modifier: Modifier = Modifier,
-    lifecycleOwner: androidx.lifecycle.LifecycleOwner
+    lifecycleOwner: androidx.lifecycle.LifecycleOwner,
+    cameraExecutor: ExecutorService
 ) {
     AndroidView(
         factory = { context ->
-            // This is a placeholder for the actual CameraX implementation
-            // In a real app, you would use PreviewView from CameraX
-            androidx.compose.ui.platform.ComposeView(context).apply {
-                setContent {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Gray),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.CameraAlt,
-                                contentDescription = "Camera Preview",
-                                modifier = Modifier.size(64.dp),
-                                tint = Color.White
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = "Camera Preview",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White
-                            )
-                            Text(
-                                text = "CameraX integration would go here",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.White.copy(alpha = 0.8f)
-                            )
-                        }
-                    }
-                }
+            val previewView = PreviewView(context).apply {
+                scaleType = PreviewView.ScaleType.FILL_CENTER
+                setBackgroundColor(android.graphics.Color.BLACK)
             }
+
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+            cameraProviderFuture.addListener({
+                val cameraProvider = cameraProviderFuture.get()
+
+                val preview = Preview.Builder().build().also { it.setSurfaceProvider(previewView.surfaceProvider) }
+                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                try {
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview)
+                } catch (_: Exception) {
+                }
+            }, ContextCompat.getMainExecutor(context))
+
+            previewView
         },
         modifier = modifier
     )

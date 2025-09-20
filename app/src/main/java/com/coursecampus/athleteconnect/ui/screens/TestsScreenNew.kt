@@ -27,12 +27,13 @@ import com.coursecampus.athleteconnect.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestsScreenNew(
-    navController: NavController = rememberNavController(),
+    navController: NavController,
     viewModel: TestsViewModel = hiltViewModel()
 ) {
     val fitnessTests by viewModel.fitnessTests.collectAsState()
     val recentResults by viewModel.recentResults.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val analysisMessage by viewModel.analysisMessage.collectAsState()
     
     var selectedCategory by remember { mutableStateOf("All") }
     val categories = listOf("All", "Speed", "Power", "Strength", "Core", "Agility")
@@ -66,6 +67,25 @@ fun TestsScreenNew(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                 )
+                if (isLoading) {
+                    LinearProgressIndicator(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp))
+                }
+                if (!analysisMessage.isNullOrEmpty()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(
+                            text = analysisMessage ?: "",
+                            modifier = Modifier.padding(12.dp),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                }
             }
         }
 
@@ -102,8 +122,8 @@ fun TestsScreenNew(
             TestCard(
                 test = test,
                 onClick = {
-                    // Navigate to camera screen for test execution
-                    navController.navigate("camera/${test.id}")
+                    // Navigate to test detail screen first
+                    navController.navigate("test_detail/${test.id}")
                 }
             )
         }

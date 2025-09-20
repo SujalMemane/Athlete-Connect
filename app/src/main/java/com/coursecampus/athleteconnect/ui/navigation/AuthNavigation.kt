@@ -10,7 +10,11 @@ sealed class AuthScreen(val route: String) {
     object Splash : AuthScreen("splash")
     object SignIn : AuthScreen("signin")
     object Registration : AuthScreen("registration")
-    object ForgotPassword : AuthScreen("forgot_password")
+    object LoginSignUp : AuthScreen("login_signup")
+    object ChoosePath : AuthScreen("choose_path")
+    object AboutYourself : AuthScreen("about_yourself")
+    object FitnessGoals : AuthScreen("fitness_goals")
+    object Achievements : AuthScreen("achievements")
 }
 
 @Composable
@@ -23,7 +27,7 @@ fun AuthNavigation(
         startDestination = AuthScreen.Splash.route
     ) {
         composable(AuthScreen.Splash.route) {
-            SplashScreen(
+            SplashScreenNew(
                 onNavigateToAuth = {
                     navController.navigate(AuthScreen.SignIn.route) {
                         popUpTo(AuthScreen.Splash.route) { inclusive = true }
@@ -33,26 +37,26 @@ fun AuthNavigation(
         }
         
         composable(AuthScreen.SignIn.route) {
-            SignUpScreen(
+            SignInScreenNew(
                 onNavigateToRegistration = {
                     navController.navigate(AuthScreen.Registration.route)
                 },
                 onNavigateToForgotPassword = {
-                    navController.navigate(AuthScreen.ForgotPassword.route)
+                    // Handle forgot password
                 },
                 onSignIn = { email, password ->
-                    // Handle sign in logic
-                    onAuthComplete()
+                    // Navigate to Choose Path
+                    navController.navigate(AuthScreen.ChoosePath.route)
                 },
                 onSocialSignIn = { provider ->
-                    // Handle social sign in logic
-                    onAuthComplete()
+                    // Navigate to Choose Path
+                    navController.navigate(AuthScreen.ChoosePath.route)
                 }
             )
         }
         
         composable(AuthScreen.Registration.route) {
-            RegistrationScreen(
+            RegistrationScreenNew(
                 onNavigateToSignIn = {
                     navController.popBackStack()
                 },
@@ -67,14 +71,38 @@ fun AuthNavigation(
             )
         }
         
-        composable(AuthScreen.ForgotPassword.route) {
-            ForgotPasswordScreen(
-                onNavigateToSignIn = {
-                    navController.popBackStack()
+        
+        composable(AuthScreen.ChoosePath.route) {
+            ChoosePathScreenNew(
+                onAthleteSelected = {
+                    navController.navigate(AuthScreen.AboutYourself.route)
                 },
-                onResetPassword = { email, otp, newPassword ->
-                    // Handle password reset logic
-                    navController.popBackStack()
+                onCoachSelected = {
+                    onAuthComplete()
+                }
+            )
+        }
+        
+        composable(AuthScreen.AboutYourself.route) {
+            AboutYourselfScreen(
+                onContinue = {
+                    navController.navigate(AuthScreen.FitnessGoals.route)
+                }
+            )
+        }
+        
+        composable(AuthScreen.FitnessGoals.route) {
+            FitnessGoalsScreenNew(
+                onContinue = {
+                    navController.navigate(AuthScreen.Achievements.route)
+                }
+            )
+        }
+        
+        composable(AuthScreen.Achievements.route) {
+            AchievementsScreen(
+                onComplete = {
+                    onAuthComplete()
                 }
             )
         }

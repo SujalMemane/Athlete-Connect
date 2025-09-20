@@ -1,19 +1,14 @@
 package com.coursecampus.athleteconnect.domain.repository
 
-import com.coursecampus.athleteconnect.data.model.Athlete
-import kotlinx.coroutines.flow.Flow
+import com.coursecampus.athleteconnect.data.local.entity.AthleteEntity
 
 interface AthleteRepository {
-    fun getAllAthletes(): Flow<List<Athlete>>
-    suspend fun getAthleteById(id: String): Athlete?
-    fun getAthletesBySport(sport: String): Flow<List<Athlete>>
-    fun getAthletesByLocation(location: String): Flow<List<Athlete>>
-    fun getFollowingAthletes(): Flow<List<Athlete>>
-    fun getVerifiedAthletes(): Flow<List<Athlete>>
-    suspend fun insertAthlete(athlete: Athlete)
-    suspend fun updateAthlete(athlete: Athlete)
-    suspend fun deleteAthlete(athlete: Athlete)
-    suspend fun updateFollowingStatus(id: String, following: Boolean)
-    suspend fun refreshAthletes()
+    suspend fun login(email: String, password: String): Result<AthleteEntity>
+    suspend fun register(athlete: AthleteEntity, password: String): Result<AthleteEntity>
+    suspend fun getCurrentAthlete(): AthleteEntity?
+    suspend fun updateProfile(athlete: AthleteEntity): Result<AthleteEntity>
+    suspend fun searchAthletes(query: String): List<AthleteEntity>
+    suspend fun getAthleteById(id: String): AthleteEntity?
+    suspend fun followAthlete(athleteId: String): Result<Boolean>
+    suspend fun getTopAthletes(): List<AthleteEntity>
 }
-

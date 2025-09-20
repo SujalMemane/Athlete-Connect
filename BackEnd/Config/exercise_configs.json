@@ -1,0 +1,268 @@
+{
+  "exercises": {
+    "pushup": {
+      "name": "Push-ups",
+      "description": "Upper body strength assessment with form analysis",
+      "difficulty": "beginner",
+      "duration_range": [120, 300],
+      "target_muscles": ["chest", "triceps", "shoulders", "core"],
+      "assessment_criteria": {
+        "form_weight": 0.4,
+        "rep_count_weight": 0.3,
+        "consistency_weight": 0.2,
+        "endurance_weight": 0.1
+      },
+      "pose_landmarks": {
+        "key_points": [11, 12, 13, 14, 15, 16, 23, 24, 27, 28],
+        "critical_angles": {
+          "elbow_min": 70,
+          "elbow_max": 180,
+          "body_line_min": 160,
+          "body_line_max": 190
+        }
+      },
+      "rep_thresholds": {
+        "beginner": {"min": 5, "good": 15, "excellent": 30},
+        "intermediate": {"min": 10, "good": 25, "excellent": 45},
+        "advanced": {"min": 20, "good": 40, "excellent": 65}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Keep your body straight and lower yourself down",
+          "form_correction": "Maintain a straight line from head to heels",
+          "encouragement": "Great form! Keep it up!",
+          "completion": "Excellent push-up session!"
+        },
+        "hindi": {
+          "start": "Body straight rakho aur neeche jao",
+          "form_correction": "Head se heel tak straight line maintain karo",
+          "encouragement": "Bahut accha form! Aise hi karte raho!",
+          "completion": "Kamaal ka push-up session!"
+        }
+      }
+    },
+    "squat": {
+      "name": "Squats",
+      "description": "Lower body power and mobility evaluation",
+      "difficulty": "beginner",
+      "duration_range": [120, 300],
+      "target_muscles": ["quadriceps", "glutes", "hamstrings", "calves"],
+      "assessment_criteria": {
+        "form_weight": 0.35,
+        "depth_weight": 0.25,
+        "rep_count_weight": 0.25,
+        "stability_weight": 0.15
+      },
+      "pose_landmarks": {
+        "key_points": [11, 12, 23, 24, 25, 26, 27, 28],
+        "critical_angles": {
+          "knee_min": 70,
+          "knee_max": 180,
+          "hip_min": 60,
+          "hip_max": 180
+        }
+      },
+      "rep_thresholds": {
+        "beginner": {"min": 8, "good": 20, "excellent": 40},
+        "intermediate": {"min": 15, "good": 35, "excellent": 60},
+        "advanced": {"min": 25, "good": 50, "excellent": 85}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Stand tall and squat down like sitting in a chair",
+          "form_correction": "Keep your chest up and knees aligned",
+          "encouragement": "Perfect depth! Keep going!",
+          "completion": "Outstanding squat performance!"
+        },
+        "hindi": {
+          "start": "Seedhe khade ho aur chair mein baithne ki tarah squat karo",
+          "form_correction": "Chest up rakho aur knees align rakho",
+          "encouragement": "Perfect depth! Chalte raho!",
+          "completion": "Zabardast squat performance!"
+        }
+      }
+    },
+    "situp": {
+      "name": "Sit-ups",
+      "description": "Core strength and endurance testing",
+      "difficulty": "intermediate",
+      "duration_range": [180, 360],
+      "target_muscles": ["abs", "hip_flexors", "core"],
+      "assessment_criteria": {
+        "form_weight": 0.4,
+        "range_of_motion_weight": 0.3,
+        "rep_count_weight": 0.2,
+        "tempo_weight": 0.1
+      },
+      "pose_landmarks": {
+        "key_points": [0, 11, 12, 23, 24, 25, 26],
+        "critical_angles": {
+          "hip_min": 30,
+          "hip_max": 90,
+          "spine_min": 160,
+          "spine_max": 190
+        }
+      },
+      "rep_thresholds": {
+        "beginner": {"min": 10, "good": 25, "excellent": 45},
+        "intermediate": {"min": 20, "good": 40, "excellent": 65},
+        "advanced": {"min": 35, "good": 60, "excellent": 90}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Lie down and bring your chest to your knees",
+          "form_correction": "Control the movement and engage your core",
+          "encouragement": "Strong core work! Keep it controlled!",
+          "completion": "Impressive core strength!"
+        },
+        "hindi": {
+          "start": "Let jao aur chest ko knees tak le jao",
+          "form_correction": "Movement control karo aur core engage karo",
+          "encouragement": "Strong core work! Control mein rakho!",
+          "completion": "Impressive core strength!"
+        }
+      }
+    },
+    "plank": {
+      "name": "Plank Hold",
+      "description": "Core stability and endurance challenge",
+      "difficulty": "intermediate",
+      "duration_range": [30, 300],
+      "target_muscles": ["core", "shoulders", "glutes"],
+      "assessment_criteria": {
+        "form_weight": 0.5,
+        "stability_weight": 0.3,
+        "duration_weight": 0.2
+      },
+      "pose_landmarks": {
+        "key_points": [11, 12, 23, 24, 27, 28],
+        "critical_angles": {
+          "body_line_min": 165,
+          "body_line_max": 185,
+          "hip_sag_max": 15
+        }
+      },
+      "duration_thresholds": {
+        "beginner": {"min": 15, "good": 45, "excellent": 90},
+        "intermediate": {"min": 30, "good": 90, "excellent": 180},
+        "advanced": {"min": 60, "good": 180, "excellent": 300}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Hold a straight line from head to heels",
+          "form_correction": "Keep your hips level and core tight",
+          "encouragement": "Rock solid! Hold that position!",
+          "completion": "Amazing plank endurance!"
+        },
+        "hindi": {
+          "start": "Head se heel tak straight line maintain karo",
+          "form_correction": "Hips level rakho aur core tight karo",
+          "encouragement": "Bilkul solid! Position hold karo!",
+          "completion": "Amazing plank endurance!"
+        }
+      }
+    },
+    "burpee": {
+      "name": "Burpees",
+      "description": "Full-body conditioning and power assessment",
+      "difficulty": "advanced",
+      "duration_range": [180, 480],
+      "target_muscles": ["full_body", "cardiovascular"],
+      "assessment_criteria": {
+        "form_weight": 0.3,
+        "coordination_weight": 0.25,
+        "power_weight": 0.25,
+        "endurance_weight": 0.2
+      },
+      "pose_landmarks": {
+        "key_points": [0, 11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28],
+        "critical_angles": {
+          "squat_knee_min": 70,
+          "pushup_elbow_min": 70,
+          "jump_height_min": 0.1
+        }
+      },
+      "rep_thresholds": {
+        "beginner": {"min": 3, "good": 8, "excellent": 15},
+        "intermediate": {"min": 6, "good": 15, "excellent": 25},
+        "advanced": {"min": 10, "good": 20, "excellent": 35}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Full body movement - squat, plank, jump!",
+          "form_correction": "Complete each phase with good form",
+          "encouragement": "Explosive power! You're crushing it!",
+          "completion": "Incredible full-body workout!"
+        },
+        "hindi": {
+          "start": "Full body movement - squat, plank, jump!",
+          "form_correction": "Har phase mein good form maintain karo",
+          "encouragement": "Explosive power! Tum crush kar rahe ho!",
+          "completion": "Incredible full-body workout!"
+        }
+      }
+    },
+    "vertical_jump": {
+      "name": "Vertical Jump",
+      "description": "Explosive power and athletic potential",
+      "difficulty": "intermediate",
+      "duration_range": [60, 180],
+      "target_muscles": ["legs", "glutes", "calves", "core"],
+      "assessment_criteria": {
+        "height_weight": 0.4,
+        "form_weight": 0.3,
+        "landing_weight": 0.2,
+        "consistency_weight": 0.1
+      },
+      "pose_landmarks": {
+        "key_points": [11, 12, 23, 24, 25, 26, 27, 28],
+        "critical_angles": {
+          "prep_knee_min": 70,
+          "landing_stability": 0.5
+        }
+      },
+      "height_thresholds": {
+        "beginner": {"min": 20, "good": 35, "excellent": 50},
+        "intermediate": {"min": 30, "good": 50, "excellent": 70},
+        "advanced": {"min": 45, "good": 65, "excellent": 85}
+      },
+      "coaching_cues": {
+        "english": {
+          "start": "Explosive jump as high as you can!",
+          "form_correction": "Use your arms and land softly",
+          "encouragement": "Great height! Keep jumping!",
+          "completion": "Excellent explosive power!"
+        },
+        "hindi": {
+          "start": "Jitna ooncha jump kar sakte ho, karo!",
+          "form_correction": "Arms use karo aur soft landing karo",
+          "encouragement": "Great height! Jump karte raho!",
+          "completion": "Excellent explosive power!"
+        }
+      }
+    }
+  },
+  "global_settings": {
+    "camera": {
+      "default_resolution": [640, 480],
+      "target_fps": 30,
+      "detection_confidence": 0.5,
+      "tracking_confidence": 0.5
+    },
+    "assessment": {
+      "warmup_time": 5,
+      "cooldown_time": 3,
+      "min_session_duration": 30,
+      "max_session_duration": 600
+    },
+    "ai_features": {
+      "coaching_interval": 3.0,
+      "form_threshold": 70,
+      "violation_sensitivity": 0.7,
+      "voice_speed": 160
+    }
+  }
+}
+
+
+

@@ -5,6 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.coursecampus.athleteconnect.data.model.*
 import com.coursecampus.athleteconnect.domain.repository.TestResultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import com.coursecampus.athleteconnect.data.repository.AssessmentRepository
+import com.coursecampus.athleteconnect.data.remote.model.AnalyzeRequestDto
+import com.coursecampus.athleteconnect.data.remote.model.StartAssessmentRequestDto
+import com.coursecampus.athleteconnect.data.remote.model.StopAssessmentRequestDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TestsViewModel @Inject constructor(
-    private val testResultRepository: TestResultRepository
+    private val testResultRepository: TestResultRepository,
+    private val assessmentRepository: AssessmentRepository
 ) : ViewModel() {
     
     private val _fitnessTests = MutableStateFlow<List<FitnessTest>>(emptyList())
@@ -24,6 +29,10 @@ class TestsViewModel @Inject constructor(
     
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    private val _analysisMessage = MutableStateFlow<String?>(null)
+    val analysisMessage: StateFlow<String?> = _analysisMessage.asStateFlow()
+    private val _sessionId = MutableStateFlow<String?>(null)
+    val sessionId: StateFlow<String?> = _sessionId.asStateFlow()
     
     init {
         loadFitnessTests()
@@ -61,8 +70,26 @@ class TestsViewModel @Inject constructor(
     }
     
     fun startTest(test: FitnessTest) {
-        // Navigate to camera screen or test execution
-        // This will be handled by the UI layer
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val resp = assessmentRepository.startAssessment(
+                    StartAssessmentRequestDto(
+                        testId = test.id,
+                        testName = test.name,
+                        category = test.category,
+                        cameraIndex = 0
+                    )
+                )
+                _sessionId.value = resp.getOrNull()?.sessionId
+                _analysisMessage.value = resp.fold(
+                    onSuccess = { it.message },
+                    onFailure = { it.message }
+                )
+            } finally {
+                _isLoading.value = false
+            }
+        }
     }
     
     fun saveTestResult(result: TestResult) {
@@ -75,8 +102,43 @@ class TestsViewModel @Inject constructor(
                 val currentResults = _recentResults.value.toMutableList()
                 currentResults.add(0, result) // Add to beginning
                 _recentResults.value = currentResults.take(10) // Keep only recent 10
+
+                // Trigger backend analysis
+                _isLoading.value = true
+                val request = AnalyzeRequestDto(
+                    testId = result.id,
+                    testName = result.testName,
+                    category = result.category,
+                    score = result.score,
+                    unit = result.unit,
+                    durationMs = 0L,
+                    reps = if (result.unit == "reps") result.score.toInt() else 0,
+                    date = result.date
+                )
+                val analysis = assessmentRepository.analyze(request)
+                _analysisMessage.value = analysis.fold(
+                    onSuccess = { resp ->
+                        buildString {
+                            resp.feedback?.let { append(it) }
+                            if (!resp.recommendations.isNullOrEmpty()) {
+                                if (isNotEmpty()) append("\n")
+                                append("Recommendations: ")
+                                append(resp.recommendations.joinToString(", "))
+                            }
+                        }.ifBlank { null }
+                    },
+                    onFailure = { it.message ?: "Analysis failed" }
+                )
+                // Stop session if exists
+                _sessionId.value?.let { sid ->
+                    assessmentRepository.stopAssessment(StopAssessmentRequestDto(sessionId = sid))
+                    _sessionId.value = null
+                }
             } catch (e: Exception) {
                 // Handle error
+            }
+            finally {
+                _isLoading.value = false
             }
         }
     }

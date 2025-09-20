@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppContent() {
-    var isAuthenticated by remember { mutableStateOf(false) }
+    var isAuthenticated by remember { mutableStateOf(false) } // Set to false to show auth screens
     val navController = rememberNavController()
     
     if (isAuthenticated) {

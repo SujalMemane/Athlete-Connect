@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.coursecampus.athleteconnect"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.coursecampus.athleteconnect"
-        minSdk = 29
-        targetSdk = 36
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -21,8 +21,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+        }
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
