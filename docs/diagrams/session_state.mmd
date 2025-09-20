@@ -1,0 +1,16 @@
+%% Assessment Session State Machine
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Starting: Start (exercise, mode)
+  Starting --> Running: Session OK
+  Starting --> Error: Start failed
+
+  Running --> Running: Metrics tick (100–500ms)
+  Running --> Paused: Pause
+  Paused --> Running: Resume
+  Running --> Stopping: Stop
+  Stopping --> Ended: Session saved
+  Stopping --> Error: Stop failed
+  Ended --> Idle: New session
+  Error --> Idle: Recover
+

@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Athlete-Connect"
+rootProject.name = "Athlete Connect"
 include(":app")
+ 
