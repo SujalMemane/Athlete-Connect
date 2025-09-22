@@ -28,13 +28,13 @@ fun MessagesScreen() {
         listOf(
             Conversation(
                 id = "1",
-                participantIds = listOf("current_user", "alex_johnson"),
-                participants = listOf("current_user", "alex_johnson"),
+                participantIds = listOf("current_user", "ramesh_yadav"),
+                participants = listOf("current_user", "ramesh_yadav"),
                 lastMessage = Message(
                     id = "1",
-                    senderId = "alex_johnson",
+                    senderId = "ramesh_yadav",
                     receiverId = "current_user",
-                    senderName = "Alex Johnson",
+                    senderName = "Ramesh Yadav",
                     content = "Hey! Great performance at the track meet yesterday!",
                     timestamp = "2 hours ago",
                     isRead = false,
@@ -45,13 +45,13 @@ fun MessagesScreen() {
             ),
             Conversation(
                 id = "2",
-                participantIds = listOf("current_user", "sarah_williams"),
-                participants = listOf("current_user", "sarah_williams"),
+                participantIds = listOf("current_user", "priya_sharma"),
+                participants = listOf("current_user", "priya_sharma"),
                 lastMessage = Message(
                     id = "2",
-                    senderId = "sarah_williams",
+                    senderId = "priya_sharma",
                     receiverId = "current_user",
-                    senderName = "Sarah Williams",
+                    senderName = "Priya Sharma",
                     content = "Thanks for the training tips!",
                     timestamp = "1 day ago",
                     isRead = true,
@@ -62,13 +62,13 @@ fun MessagesScreen() {
             ),
             Conversation(
                 id = "3",
-                participantIds = listOf("current_user", "mike_davis"),
-                participants = listOf("current_user", "mike_davis"),
+                participantIds = listOf("current_user", "saina_nehwal"),
+                participants = listOf("current_user", "saina_nehwal"),
                 lastMessage = Message(
                     id = "3",
-                    senderId = "mike_davis",
+                    senderId = "saina_nehwal",
                     receiverId = "current_user",
-                    senderName = "Mike Davis",
+                    senderName = "Saina Nehwal",
                     content = "Are you going to the basketball camp next week?",
                     timestamp = "3 days ago",
                     isRead = true,
@@ -79,13 +79,13 @@ fun MessagesScreen() {
             ),
             Conversation(
                 id = "4",
-                participantIds = listOf("current_user", "coach_martinez"),
-                participants = listOf("current_user", "coach_martinez"),
+                participantIds = listOf("current_user", "mary_kom"),
+                participants = listOf("current_user", "mary_kom"),
                 lastMessage = Message(
                     id = "4",
-                    senderId = "coach_martinez",
+                    senderId = "mary_kom",
                     receiverId = "current_user",
-                    senderName = "Coach Martinez",
+                    senderName = "Mary Kom",
                     content = "Your test results look great! Keep up the good work.",
                     timestamp = "1 week ago",
                     isRead = true,
@@ -257,9 +257,9 @@ fun ChatScreen(
         listOf(
             Message(
                 id = "1",
-                senderId = "alex_johnson",
+                senderId = "ramesh_yadav",
                 receiverId = "current_user",
-                senderName = "Alex Johnson",
+                senderName = "Ramesh Yadav",
                 content = "Hey! Great performance at the track meet yesterday!",
                 timestamp = "2:30 PM",
                 isRead = true,
@@ -268,7 +268,7 @@ fun ChatScreen(
             Message(
                 id = "2",
                 senderId = "current_user",
-                receiverId = "alex_johnson",
+                receiverId = "ramesh_yadav",
                 senderName = "You",
                 content = "Thanks! Your 40-yard dash time was incredible too!",
                 timestamp = "2:32 PM",
@@ -277,13 +277,13 @@ fun ChatScreen(
             ),
             Message(
                 id = "3",
-                senderId = "alex_johnson",
+                senderId = "ramesh_yadav",
                 receiverId = "current_user",
-                senderName = "Alex Johnson",
+                senderName = "Ramesh Yadav",
                 content = "We should train together sometime. I know some great drills.",
                 timestamp = "2:35 PM",
-                    isRead = false,
-                    messageType = MessageType.TEXT
+                isRead = false,
+                messageType = MessageType.TEXT
             )
         )
     }
@@ -297,7 +297,7 @@ fun ChatScreen(
         TopAppBar(
             title = {
                 Text(
-                    text = "Alex Johnson",
+                    text = "Ramesh Yadav",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -446,4 +446,3 @@ private fun MessageBubble(
         }
     }
 }
-

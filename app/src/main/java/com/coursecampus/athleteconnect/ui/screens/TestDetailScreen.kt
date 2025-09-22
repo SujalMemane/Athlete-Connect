@@ -61,8 +61,8 @@ fun TestDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .padding(8.dp), // reduced padding
+            verticalArrangement = Arrangement.spacedBy(12.dp) // reduced spacing
         ) {
             // Test Image Placeholder
             Box(
@@ -163,26 +163,24 @@ fun TestDetailScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
-
+            Spacer(modifier = Modifier.weight(1f)) // keep for layout, but minimal
             // Start Test Button
             Button(
                 onClick = onStartTest,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(48.dp), // reduced height
                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
                     text = "Start Test",
-                    fontSize = 18.sp,
+                    fontSize = 16.sp, // reduced font size
                     fontWeight = FontWeight.Medium,
                     color = Color.White
                 )
             }
-
-            Spacer(modifier = Modifier.height(80.dp)) // Bottom padding for navigation
+            Spacer(modifier = Modifier.height(8.dp)) // reduced bottom Spacer
         }
     }
 }

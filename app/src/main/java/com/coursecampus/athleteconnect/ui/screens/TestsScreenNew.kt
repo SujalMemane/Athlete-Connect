@@ -48,13 +48,13 @@ fun TestsScreenNew(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+            .padding(horizontal = 12.dp), // reduced horizontal padding
+        verticalArrangement = Arrangement.spacedBy(12.dp) // reduced spacing
     ) {
         item {
             // Header
             Column(
-                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp) // reduced padding
             ) {
                 Text(
                     text = "Fitness Tests",
@@ -70,17 +70,17 @@ fun TestsScreenNew(
                 if (isLoading) {
                     LinearProgressIndicator(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp))
+                        .padding(top = 4.dp)) // reduced padding
                 }
                 if (!analysisMessage.isNullOrEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
                     Surface(
                         color = MaterialTheme.colorScheme.secondaryContainer,
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
                             text = analysisMessage ?: "",
-                            modifier = Modifier.padding(12.dp),
+                            modifier = Modifier.padding(8.dp), // reduced padding
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -136,13 +136,13 @@ fun TestsScreenNew(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier.padding(top = 4.dp) // reduced padding
                 )
             }
 
             item {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp) // reduced spacing
                 ) {
                     recentResults.take(5).forEach { result ->
                         TestResultCard(
@@ -174,7 +174,7 @@ private fun TestCard(
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(8.dp) // reduced padding
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -190,7 +190,7 @@ private fun TestCard(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(2.dp)) // reduced Spacer
                     Text(
                         text = test.description,
                         style = MaterialTheme.typography.bodyMedium,
@@ -206,8 +206,8 @@ private fun TestCard(
                 )
             }
             
-            Spacer(modifier = Modifier.height(16.dp))
-            
+            Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -219,7 +219,7 @@ private fun TestCard(
                 ) {
                     Text(
                         text = test.category,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp), // reduced padding
                         style = MaterialTheme.typography.labelMedium,
                         color = FitnessPrimary,
                         fontWeight = FontWeight.Medium
@@ -238,7 +238,7 @@ private fun TestCard(
                 ) {
                     Text(
                         text = test.difficulty.name,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp), // reduced padding
                         style = MaterialTheme.typography.labelMedium,
                         color = when (test.difficulty) {
                             Difficulty.BEGINNER -> Color.Green

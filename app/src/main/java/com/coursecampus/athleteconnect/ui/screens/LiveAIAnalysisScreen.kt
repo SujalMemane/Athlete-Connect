@@ -112,7 +112,7 @@ fun LiveAIAnalysisScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            MetricCard("Reps Done", "33/50", FitnessSuccess)
+                            MetricCard("Reps Done", "3/50", FitnessSuccess)
                             MetricCard("Accuracy", "90%", PrimaryBlue)
                             MetricCard("Tempo", "1.2s", FitnessWarning)
                             MetricCard("Range of Motion", "90%", FitnessGold)

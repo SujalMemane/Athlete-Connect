@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -64,241 +65,224 @@ fun FitnessGoalsScreenNew(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFF8F9FA),
-                        Color(0xFFE3F2FD)
-                    )
-                )
-            )
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        // Background decoration
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            PrimaryBlue.copy(alpha = 0.1f),
-                            PrimaryBlue.copy(alpha = 0.05f)
-                        )
-                    )
-                )
-        )
-
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Progress indicator
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(3) { index ->
-                    Box(
-                        modifier = Modifier
-                            .size(if (index == 1) 12.dp else 8.dp)
-                            .background(
-                                color = if (index <= 1) PrimaryBlue else Color.LightGray,
-                                shape = CircleShape
-                            )
-                    )
-                    if (index < 2) {
-                        Spacer(modifier = Modifier.width(8.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    repeat(3) { index ->
+                        Box(
+                            modifier = Modifier
+                                .size(if (index == 1) 12.dp else 8.dp)
+                                .background(
+                                    color = if (index <= 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+                                    shape = CircleShape
+                                )
+                        )
+                        if (index < 2) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                        }
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Logo section
-            Box(
-                modifier = Modifier
-                    .size(60.dp)
-                    .background(
-                        brush = Brush.radialGradient(
-                            colors = listOf(
-                                PrimaryBlue,
-                                PrimaryBlueDark
-                            )
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                Box(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .background(
+                            brush = Brush.radialGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                                )
+                            ),
+                            shape = CircleShape
                         ),
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_logo),
-                    contentDescription = "AthleteConnect Logo",
-                    modifier = Modifier.size(30.dp)
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_logo),
+                        contentDescription = "AthleteConnect Logo",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+            item {
+                Text(
+                    text = "Your Fitness Goals",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
                 )
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Title section
-            Text(
-                text = "Your Fitness Goals",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Text(
-                text = "Select your primary goal and any secondary goals",
-                fontSize = 14.sp,
-                color = Color.Gray,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Goals selection card
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
+            item {
+                Spacer(modifier = Modifier.height(6.dp))
+            }
+            item {
+                Text(
+                    text = "Select your primary goal and any secondary goals",
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item {
+                // Goals selection card
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
-                    // Primary Goal Section
-                    Text(
-                        text = "Primary Fitness Goal",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                    
-                    if (primaryGoal != null) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        // Primary Goal Section
+                        Text(
+                            text = "Primary Fitness Goal",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
+                        )
+                        if (primaryGoal != null) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = primaryGoal!!.description,
+                                fontSize = 14.sp,
+                                color = Color.Gray
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(fitnessGoals) { goal ->
+                                GoalCardNew(
+                                    goal = goal,
+                                    isSelected = primaryGoal == goal,
+                                    isPrimary = true,
+                                    onClick = {
+                                        primaryGoal = if (primaryGoal == goal) null else goal
+                                        // Remove from secondary if selected as primary
+                                        if (primaryGoal == goal) {
+                                            secondaryGoals = secondaryGoals - goal
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        // Divider
+                        Divider(color = Color.LightGray.copy(alpha = 0.5f))
+                        Spacer(modifier = Modifier.height(20.dp))
+                        // Secondary Goals Section
+                        Text(
+                            text = "Secondary Fitness Goals",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = primaryGoal!!.description,
+                            text = "Select up to 2 additional goals (optional)",
                             fontSize = 14.sp,
                             color = Color.Gray
                         )
-                    }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        items(fitnessGoals) { goal ->
-                            GoalCardNew(
-                                goal = goal,
-                                isSelected = primaryGoal == goal,
-                                isPrimary = true,
-                                onClick = { 
-                                    primaryGoal = if (primaryGoal == goal) null else goal
-                                    // Remove from secondary if selected as primary
-                                    if (primaryGoal == goal) {
-                                        secondaryGoals = secondaryGoals - goal
+                        Spacer(modifier = Modifier.height(12.dp))
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(fitnessGoals.filter { it != primaryGoal }) { goal ->
+                                GoalCardNew(
+                                    goal = goal,
+                                    isSelected = secondaryGoals.contains(goal),
+                                    isPrimary = false,
+                                    onClick = {
+                                        if (secondaryGoals.contains(goal)) {
+                                            secondaryGoals = secondaryGoals - goal
+                                        } else if (secondaryGoals.size < 2) {
+                                            secondaryGoals = secondaryGoals + goal
+                                        }
                                     }
-                                }
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // Divider
-                    Divider(color = Color.LightGray.copy(alpha = 0.5f))
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // Secondary Goals Section
-                    Text(
-                        text = "Secondary Fitness Goals",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Select up to 2 additional goals (optional)",
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        items(fitnessGoals.filter { it != primaryGoal }) { goal ->
-                            GoalCardNew(
-                                goal = goal,
-                                isSelected = secondaryGoals.contains(goal),
-                                isPrimary = false,
-                                onClick = { 
-                                    if (secondaryGoals.contains(goal)) {
-                                        secondaryGoals = secondaryGoals - goal
-                                    } else if (secondaryGoals.size < 2) {
-                                        secondaryGoals = secondaryGoals + goal
-                                    }
-                                }
-                            )
+                                )
+                            }
                         }
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Progress summary
-            if (primaryGoal != null || secondaryGoals.isNotEmpty()) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = PrimaryBlue.copy(alpha = 0.05f)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(12.dp)
-                    ) {
-                        Text(
-                            text = "Your Goals Summary:",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = PrimaryBlue
-                        )
-                        
-                        Spacer(modifier = Modifier.height(6.dp))
-                        
-                        primaryGoal?.let { goal ->
-                            Text(
-                                text = "• Primary: ${goal.name}",
-                                fontSize = 14.sp,
-                                color = Color.DarkGray
-                            )
-                        }
-                        
-                        secondaryGoals.forEach { goal ->
-                            Text(
-                                text = "• Secondary: ${goal.name}",
-                                fontSize = 14.sp,
-                                color = Color.DarkGray
-                            )
-                        }
-                    }
-                }
-                
+            item {
                 Spacer(modifier = Modifier.height(12.dp))
             }
-
-            // Continue Button - Always visible at bottom
+            item {
+                // Progress summary
+                if (primaryGoal != null || secondaryGoals.isNotEmpty()) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = PrimaryBlue.copy(alpha = 0.05f)),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(12.dp)
+                        ) {
+                            Text(
+                                text = "Your Goals Summary:",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = PrimaryBlue
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            primaryGoal?.let { goal ->
+                                Text(
+                                    text = "• Primary: ${goal.name}",
+                                    fontSize = 14.sp,
+                                    color = Color.DarkGray
+                                )
+                            }
+                            secondaryGoals.forEach { goal ->
+                                Text(
+                                    text = "• Secondary: ${goal.name}",
+                                    fontSize = 14.sp,
+                                    color = Color.DarkGray
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
+        // Continue Button - Always visible at bottom
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp)
+        ) {
             Button(
                 onClick = onContinue,
                 enabled = primaryGoal != null,
@@ -318,8 +302,6 @@ fun FitnessGoalsScreenNew(
                     color = Color.White
                 )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
@@ -374,9 +356,9 @@ fun GoalCardNew(
                     modifier = Modifier.size(20.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(6.dp))
-            
+
             Text(
                 text = goal.name,
                 fontSize = 14.sp,
@@ -384,7 +366,7 @@ fun GoalCardNew(
                 color = if (isSelected) goal.color else Color.Black,
                 textAlign = TextAlign.Center
             )
-            
+
             if (isSelected && isPrimary) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Box(

@@ -111,8 +111,8 @@ fun TestsScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp), // reduced vertical padding
+        verticalArrangement = Arrangement.spacedBy(12.dp) // reduced spacing
     ) {
         item {
             // Header
@@ -125,9 +125,8 @@ fun TestsScreen() {
                     text = "Fitness Tests",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.primary
                 )
-                
                 IconButton(onClick = { /* Camera test */ }) {
                     Icon(
                         imageVector = Icons.Default.CameraAlt,
@@ -137,53 +136,63 @@ fun TestsScreen() {
                 }
             }
         }
-
         item {
             // Available Tests
-            Column {
-                Text(
-                    text = "Available Tests",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(fitnessTests) { test ->
-                        TestCard(test = test)
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) { // reduced padding
+                    Text(
+                        text = "Available Tests",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp) // reduced spacing
+                    ) {
+                        items(fitnessTests) { test ->
+                            TestCard(test = test)
+                        }
                     }
                 }
             }
         }
-
         item {
             // Recent Results
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Recent Results",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    TextButton(onClick = { /* View all results */ }) {
-                        Text("View All")
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) { // reduced padding
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Recent Results",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        TextButton(onClick = { /* View all results */ }) {
+                            Text("View All", color = FitnessPrimary)
+                        }
                     }
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    recentResults.forEach { result ->
-                        TestResultCard(testResult = result)
+                    Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp) // reduced spacing
+                    ) {
+                        recentResults.forEach { result ->
+                            TestResultCard(testResult = result)
+                        }
                     }
                 }
             }
@@ -210,7 +219,7 @@ fun TestCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(12.dp) // reduced padding
         ) {
             // Category Badge
             Box(
@@ -219,7 +228,7 @@ fun TestCard(
                         color = getCategoryColor(test.category).copy(alpha = 0.1f),
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 2.dp) // reduced vertical padding
             ) {
                 Text(
                     text = test.category,
@@ -228,24 +237,19 @@ fun TestCard(
                     color = getCategoryColor(test.category)
                 )
             }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
+            Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
             Text(
                 text = test.name,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
             Text(
                 text = test.description,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
+            Spacer(modifier = Modifier.height(4.dp)) // reduced Spacer
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -256,7 +260,7 @@ fun TestCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
-                
+
                 Button(
                     onClick = onClick,
                     modifier = Modifier.height(32.dp),

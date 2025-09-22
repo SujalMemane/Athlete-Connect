@@ -106,9 +106,8 @@ fun TestHistoryScreen(
         // Content
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxSize().padding(8.dp), // reduced padding
+            verticalArrangement = Arrangement.spacedBy(8.dp) // reduced spacing
         ) {
             items(testHistory) { test ->
                 TestHistoryCard(
@@ -118,7 +117,7 @@ fun TestHistoryScreen(
             }
             
             item {
-                Spacer(modifier = Modifier.height(80.dp)) // Bottom padding
+                Spacer(modifier = Modifier.height(8.dp)) // reduced bottom Spacer
             }
         }
     }

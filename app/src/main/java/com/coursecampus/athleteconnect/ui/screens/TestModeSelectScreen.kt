@@ -25,171 +25,176 @@ fun TestModeSelectScreen(
     onUploadVideoSelected: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
     ) {
-        // Top Bar
-        TopAppBar(
-            title = { 
-                Text(
-                    text = "Choose your assessment type",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
-        )
-
-        // Content
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // Live AI Analysis Option
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clickable { onLiveAnalysisSelected() },
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = PrimaryBlue.copy(alpha = 0.1f)),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .background(
-                                color = PrimaryBlue.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(30.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
+            // Top Bar
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Choose your assessment type",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        fontSize = 22.sp,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = Icons.Default.Videocam,
-                            contentDescription = "Live Analysis",
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
                             tint = PrimaryBlue,
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(28.dp)
                         )
                     }
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    Text(
-                        text = "Live AI analysis",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
-                    )
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    Text(
-                        text = "Real-time form analysis and performance tracking",
-                        fontSize = 14.sp,
-                        color = TextSecondary,
-                        textAlign = TextAlign.Center,
-                        lineHeight = 20.sp
-                    )
-                }
-            }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White),
+                modifier = Modifier.padding(top = 12.dp, bottom = 16.dp)
+            )
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Upload Video Option
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clickable { onUploadVideoSelected() },
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = FitnessSuccess.copy(alpha = 0.1f)),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            // Content
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                // Live AI Analysis Option
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clickable { onLiveAnalysisSelected() },
+                    shape = RoundedCornerShape(18.dp),
+                    colors = CardDefaults.cardColors(containerColor = PrimaryBlue.copy(alpha = 0.08f)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .background(
-                                color = FitnessSuccess.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(30.dp)
-                            ),
-                        contentAlignment = Alignment.Center
+                    Row(
+                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Upload,
-                            contentDescription = "Upload Video",
-                            tint = FitnessSuccess,
-                            modifier = Modifier.size(32.dp)
-                        )
+                        Box(
+                            modifier = Modifier
+                                .size(54.dp)
+                                .background(
+                                    color = PrimaryBlue.copy(alpha = 0.18f),
+                                    shape = RoundedCornerShape(16.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Videocam,
+                                contentDescription = "Live Analysis",
+                                tint = PrimaryBlue,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(18.dp))
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Live AI analysis",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                textAlign = TextAlign.Start
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Real-time form analysis and performance tracking",
+                                fontSize = 13.sp,
+                                color = TextSecondary,
+                                textAlign = TextAlign.Start,
+                                lineHeight = 18.sp
+                            )
+                        }
                     }
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
+                }
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                // Upload Video Option
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clickable { onUploadVideoSelected() },
+                    shape = RoundedCornerShape(18.dp),
+                    colors = CardDefaults.cardColors(containerColor = FitnessSuccess.copy(alpha = 0.08f)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(54.dp)
+                                .background(
+                                    color = FitnessSuccess.copy(alpha = 0.18f),
+                                    shape = RoundedCornerShape(16.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Upload,
+                                contentDescription = "Upload Video",
+                                tint = FitnessSuccess,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(18.dp))
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Upload a video",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                textAlign = TextAlign.Start
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Record your performance and upload for analysis",
+                                fontSize = 13.sp,
+                                color = TextSecondary,
+                                textAlign = TextAlign.Start,
+                                lineHeight = 18.sp
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Next Button
+                Button(
+                    onClick = { /* Handle next */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+                    shape = RoundedCornerShape(14.dp),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                ) {
                     Text(
-                        text = "Upload a video",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
-                    )
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    Text(
-                        text = "Record your performance and upload for analysis",
-                        fontSize = 14.sp,
-                        color = TextSecondary,
-                        textAlign = TextAlign.Center,
-                        lineHeight = 20.sp
+                        text = "Next",
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
                     )
                 }
+                Spacer(modifier = Modifier.height(12.dp))
             }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Next Button
-            Button(
-                onClick = { /* Handle next */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "Next",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.White
-                )
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }

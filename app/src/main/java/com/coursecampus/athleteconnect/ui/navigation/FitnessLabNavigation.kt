@@ -74,30 +74,29 @@ import com.coursecampus.athleteconnect.ui.screens.auth.ForgotPasswordScreen
 
 sealed class Screen(
     val route: String,
-    val title: String,
     val icon: ImageVector
 ) {
-    object Home : Screen("home", "Home", Icons.Default.Home)
-    object Opportunities : Screen("opportunities", "Opportunities", Icons.Default.Work)
-    object Tests : Screen("tests", "Tests", Icons.Default.FitnessCenter)
-    object Dashboard : Screen("dashboard", "Dashboard", Icons.Default.Dashboard)
-    object Messages : Screen("messages", "Messages", Icons.Default.Message)
-    object Profile : Screen("profile", "Profile", Icons.Default.Person)
-    object ForgotPassword : Screen("forgot_password", "Forgot Password", Icons.Default.Lock)
+    object Home : Screen("home", Icons.Default.Home)
+    object Opportunities : Screen("opportunities", Icons.Default.Work)
+    object Tests : Screen("tests", Icons.Default.FitnessCenter)
+    object Dashboard : Screen("dashboard", Icons.Default.Dashboard)
+    object Messages : Screen("messages", Icons.Default.Message)
+    object Profile : Screen("profile", Icons.Default.Person)
+    object ForgotPassword : Screen("forgot_password", Icons.Default.Lock)
 
     // Detail screens
-    object Camera : Screen("camera/{testId}", "Camera", Icons.Default.Camera)
-    object TestDetail : Screen("test_detail/{testId}", "Test Detail", Icons.Default.FitnessCenter)
-    object TestModeSelect : Screen("test_mode/{testId}", "Test Mode", Icons.Default.Settings)
-    object TestResults : Screen("test_results/{testId}", "Test Results", Icons.Default.Assessment)
+    object Camera : Screen("camera/{testId}", Icons.Default.Camera)
+    object TestDetail : Screen("test_detail/{testId}", Icons.Default.FitnessCenter)
+    object TestModeSelect : Screen("test_mode/{testId}", Icons.Default.Settings)
+    object TestResults : Screen("test_results/{testId}", Icons.Default.Assessment)
     object OpportunityDetail :
-        Screen("opportunity_detail/{opportunityId}", "Opportunity Detail", Icons.Default.Work)
+        Screen("opportunity_detail/{opportunityId}", Icons.Default.Work)
 
-    object ChatThread : Screen("chat/{conversationId}", "Chat", Icons.Default.Message)
-    object PlayerDetail : Screen("player_detail/{playerId}", "Player Detail", Icons.Default.Person)
-    object TestHistory : Screen("test_history", "Test History", Icons.Default.History)
-    object Leaderboard : Screen("leaderboard", "Leaderboard", Icons.Default.EmojiEvents)
-    object Settings : Screen("settings", "Settings", Icons.Default.Settings)
+    object ChatThread : Screen("chat/{conversationId}", Icons.Default.Message)
+    object PlayerDetail : Screen("player_detail/{playerId}", Icons.Default.Person)
+    object TestHistory : Screen("test_history", Icons.Default.History)
+    object Leaderboard : Screen("leaderboard", Icons.Default.EmojiEvents)
+    object Settings : Screen("settings", Icons.Default.Settings)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -293,7 +292,6 @@ fun CustomBottomNavigation(
                 // Home tab
                 BottomNavItem(
                     icon = Icons.Default.Home,
-                    label = "Home",
                     selected = currentRoute == Screen.Home.route,
                     onClick = {
                         navController.navigate(Screen.Home.route) {
@@ -309,7 +307,6 @@ fun CustomBottomNavigation(
                 // Profile tab
                 BottomNavItem(
                     icon = Icons.Default.Person,
-                    label = "Profile",
                     selected = currentRoute == Screen.Profile.route,
                     onClick = {
                         navController.navigate(Screen.Profile.route) {
@@ -325,7 +322,6 @@ fun CustomBottomNavigation(
                 // Test tab
                 BottomNavItem(
                     icon = Icons.Default.Assignment,
-                    label = "Test",
                     selected = currentRoute == Screen.Tests.route,
                     onClick = {
                         navController.navigate(Screen.Tests.route) {
@@ -344,7 +340,6 @@ fun CustomBottomNavigation(
                 // Dashboard tab
                 BottomNavItem(
                     icon = Icons.Default.Dashboard,
-                    label = "Dashboard",
                     selected = currentRoute == Screen.Dashboard.route,
                     onClick = {
                         navController.navigate(Screen.Dashboard.route) {
@@ -360,7 +355,6 @@ fun CustomBottomNavigation(
                 // Opportunities tab
                 BottomNavItem(
                     icon = Icons.Default.Work,
-                    label = "Opportunities",
                     selected = currentRoute == Screen.Opportunities.route,
                     onClick = {
                         navController.navigate(Screen.Opportunities.route) {
@@ -376,7 +370,6 @@ fun CustomBottomNavigation(
                 // Message tab
                 BottomNavItem(
                     icon = Icons.Default.Chat,
-                    label = "Message",
                     selected = currentRoute == Screen.Messages.route,
                     onClick = {
                         navController.navigate(Screen.Messages.route) {
@@ -418,7 +411,6 @@ fun CustomBottomNavigation(
 @Composable
 fun BottomNavItem(
     icon: ImageVector,
-    label: String,
     selected: Boolean,
     onClick: () -> Unit
 ) {
@@ -435,20 +427,13 @@ fun BottomNavItem(
     ) {
         Icon(
             imageVector = icon,
-            contentDescription = label,
+            contentDescription = null,
             tint = color,
             modifier = Modifier.size(20.dp)
         )
 
         Spacer(modifier = Modifier.height(2.dp))
 
-        Text(
-            text = label,
-            color = color,
-            fontSize = 10.sp,
-            style = MaterialTheme.typography.labelSmall
-        )
-
-        // No underline in the second image
+        // Removed label text below icon
     }
 }

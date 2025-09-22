@@ -33,36 +33,36 @@ fun ProfileScreenNew(
     val currentUser = remember {
         Athlete(
             id = "current_user",
-            name = "John Smith",
-            age = 22,
+            name = "Ramesh Yadav",
+            age = 36,
             sport = "Basketball",
-            location = "Los Angeles, CA",
-            profilePicture = "",
+            location = "Delhi, India",
+            profilePicture = "profile_ramesh", // resource name
             coverPhoto = "",
-            height = "6'2\"",
-            weight = "185 lbs",
+            height = "5'9\"",
+            weight = "72 kg",
             personalBests = mapOf(
-                "40 Yard Dash" to "4.6s",
-                "Vertical Jump" to "36\"",
-                "Bench Press" to "225 lbs"
+                "Yo-Yo Test" to "18.5",
+                "Beep Test" to "Level 15",
+                "Bench Press" to "110 kg"
             ),
             testResults = emptyList(),
             achievements = listOf(
-                "Speed Demon",
-                "Jump Master",
-                "Strength Champion"
+                "National Basketball Champion",
+                "MVP Delhi League",
+                "Padma Shri"
             ),
             videos = emptyList(),
             verified = true,
             following = false,
-            bio = "Passionate basketball player with 8 years of experience. Always looking to improve and compete at the highest level."
+            bio = "Indian basketball player, passionate about fitness and performance. Leading by example on and off the court."
         )
     }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
+            .background(MaterialTheme.colorScheme.background)
     ) {
         item {
             // Blue header with edit button
@@ -70,7 +70,7 @@ fun ProfileScreenNew(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
-                    .background(PrimaryBlue)
+                    .background(MaterialTheme.colorScheme.primary)
             ) {
                 // Edit button
                 IconButton(
@@ -82,30 +82,19 @@ fun ProfileScreenNew(
                     Icon(
                         imageVector = Icons.Default.Edit, 
                         contentDescription = "Edit Profile",
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
-                
-                // Eye icon in the center
-                Icon(
-                    imageVector = Icons.Default.Visibility,
-                    contentDescription = "Profile Visibility",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(48.dp)
-                )
             }
-
             // Profile card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
-                    .offset(y = (-30).dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                shape = RoundedCornerShape(16.dp)
+                    .offset(y = (-40).dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
                     modifier = Modifier
@@ -113,32 +102,42 @@ fun ProfileScreenNew(
                         .padding(vertical = 24.dp, horizontal = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    // Profile photo from resources
+                    Box(
+                        modifier = Modifier
+                            .size(90.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Profile Photo",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(60.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = currentUser.name,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onSurface
                     )
-                    
                     Spacer(modifier = Modifier.height(4.dp))
-                    
                     Text(
                         text = "${currentUser.sport} • ${currentUser.location}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                     )
-                    
                     Spacer(modifier = Modifier.height(8.dp))
-                    
                     Text(
                         text = currentUser.bio,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.DarkGray,
+                        color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center
                     )
-                    
                     Spacer(modifier = Modifier.height(20.dp))
-                    
                     // Stats row
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -149,14 +148,14 @@ fun ProfileScreenNew(
                             modifier = Modifier
                                 .height(40.dp)
                                 .width(1.dp),
-                            color = Color.LightGray
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
                         )
                         StatItem(label = "Weight", value = currentUser.weight)
                         Divider(
                             modifier = Modifier
                                 .height(40.dp)
                                 .width(1.dp),
-                            color = Color.LightGray
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
                         )
                         StatItem(label = "Age", value = currentUser.age.toString())
                     }
@@ -211,7 +210,7 @@ fun ProfileScreenNew(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {

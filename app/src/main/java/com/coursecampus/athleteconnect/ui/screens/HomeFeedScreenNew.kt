@@ -1,5 +1,6 @@
 package com.coursecampus.athleteconnect.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,16 +19,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
 
 data class FeedPostNew(
     val id: String,
     val userName: String,
-    val userAvatar: String,
+    val userAvatar: String, // Initials like "RY", "SM"
     val postImage: String,
     val imageUrl: String = "",
     val postText: String,
@@ -76,7 +80,7 @@ fun HomeFeedScreenNew() {
             )
         )
     }
-    
+
     val categories = listOf("All", "Running", "Strength", "Flexibility", "Team Sports", "Nutrition")
     var selectedCategory by remember { mutableStateOf("All") }
 
@@ -85,99 +89,90 @@ fun HomeFeedScreenNew() {
             .fillMaxSize()
             .background(Color(0xFFF8F9FA))
     ) {
-        // Top Bar with Gradient
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shadowElevation = 4.dp,
-            color = Color.White
-        ) {
-            Column {
-                TopAppBar(
-                    title = { 
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(
-                                modifier = Modifier
-                                    .size(36.dp)
-                                    .background(PrimaryBlue, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "AC",
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Text(
-                                text = "Athlete Connect",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                fontSize = 20.sp
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { /* Search */ }) {
+        TopAppBar(
+            title = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(36.dp)
+                            .background(PrimaryBlue, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_logo),
+                            contentDescription = "App Logo",
+                            modifier = Modifier.size(36.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Athlete Connect",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        fontSize = 20.sp
+                    )
+                }
+            },
+            actions = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = Color.Black
+                        )
+                    }
+                    IconButton(onClick = { }) {
+                        BadgedBox(
+                            badge = { Badge { Text("3") } }
+                        ) {
                             Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search",
+                                imageVector = Icons.Default.Notifications,
+                                contentDescription = "Notifications",
                                 tint = Color.Black
                             )
                         }
-                        IconButton(onClick = { /* Notifications */ }) {
-                            BadgedBox(
-                                badge = {
-                                    Badge {
-                                        Text("3")
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Notifications,
-                                    contentDescription = "Notifications",
-                                    tint = Color.Black
-                                )
-                            }
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
-                )
-                
-                // Category Tabs
-                ScrollableTabRow(
-                    selectedTabIndex = categories.indexOf(selectedCategory),
-                    edgePadding = 16.dp,
-                    containerColor = Color.White,
-                    contentColor = PrimaryBlue,
-                    divider = {}
-                ) {
-                    categories.forEachIndexed { index, category ->
-                        Tab(
-                            selected = selectedCategory == category,
-                            onClick = { selectedCategory = category },
-                            text = { 
-                                Text(
-                                    text = category,
-                                    fontWeight = if (selectedCategory == category) FontWeight.Bold else FontWeight.Normal
-                                ) 
-                            },
-                            selectedContentColor = PrimaryBlue,
-                            unselectedContentColor = Color.Gray
-                        )
                     }
                 }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+        )
+
+        ScrollableTabRow(
+            selectedTabIndex = categories.indexOf(selectedCategory),
+            edgePadding = 16.dp,
+            containerColor = Color.White,
+            contentColor = PrimaryBlue,
+            divider = {}
+        ) {
+            categories.forEach { category ->
+                Tab(
+                    selected = selectedCategory == category,
+                    onClick = { selectedCategory = category },
+                    text = {
+                        Text(
+                            text = category,
+                            fontWeight = if (selectedCategory == category) FontWeight.Bold else FontWeight.Normal
+                        )
+                    },
+                    selectedContentColor = PrimaryBlue,
+                    unselectedContentColor = Color.Gray
+                )
             }
         }
-        
-        // Welcome Card
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = PrimaryBlue
-            )
+            colors = CardDefaults.cardColors(containerColor = PrimaryBlue)
         ) {
             Row(
                 modifier = Modifier
@@ -185,9 +180,7 @@ fun HomeFeedScreenNew() {
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Welcome back, Alex!",
                         fontSize = 20.sp,
@@ -202,10 +195,8 @@ fun HomeFeedScreenNew() {
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
-                        onClick = { /* View Stats */ },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White
-                        ),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -225,7 +216,6 @@ fun HomeFeedScreenNew() {
             }
         }
 
-        // Feed Content
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -241,15 +231,12 @@ fun HomeFeedScreenNew() {
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
-            
+
             items(feedPosts) { post ->
                 FeedPostCardNew(post = post)
             }
-            
-            // Bottom padding for navigation bar
-            item {
-                Spacer(modifier = Modifier.height(80.dp))
-            }
+
+            item { Spacer(modifier = Modifier.height(80.dp)) }
         }
     }
 }
@@ -257,54 +244,44 @@ fun HomeFeedScreenNew() {
 @Composable
 fun FeedPostCardNew(post: FeedPostNew) {
     var isLiked by remember { mutableStateOf(false) }
-    
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .clickable { /* View post details */ },
-        shape = RoundedCornerShape(16.dp),
+            .height(340.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .clickable { },
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // User Info with More Options
+        Column(modifier = Modifier.padding(20.dp)) {
+            // User Info Row
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Avatar with border
+                    // Profile initials
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .background(Color.White, CircleShape)
-                            .border(2.dp, PrimaryBlue, CircleShape)
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .background(
-                                when (post.userAvatar) {
-                                    "RY" -> PrimaryBlue
-                                    "SM" -> Color(0xFF8E44AD) // Purple
-                                    else -> Color(0xFF16A085) // Teal
-                                },
-                                CircleShape
-                            ),
+                            .background(PrimaryBlue, CircleShape)
+                            .border(2.dp, Color.White, CircleShape)
+                            .clip(CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = post.userAvatar,
+                            text = post.userAvatar, // Initials like "RY" or "SM"
                             color = Color.White,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                            fontSize = 20.sp
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.width(12.dp))
-                    
+
                     Column {
                         Text(
                             text = post.userName,
@@ -312,9 +289,7 @@ fun FeedPostCardNew(post: FeedPostNew) {
                             fontWeight = FontWeight.Bold,
                             color = Color.Black
                         )
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 imageVector = Icons.Default.AccessTime,
                                 contentDescription = null,
@@ -330,9 +305,8 @@ fun FeedPostCardNew(post: FeedPostNew) {
                         }
                     }
                 }
-                
-                // More options
-                IconButton(onClick = { /* Show options */ }) {
+
+                IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = "More Options",
@@ -340,10 +314,9 @@ fun FeedPostCardNew(post: FeedPostNew) {
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
-            // Post Text with better typography
+
             Text(
                 text = post.postText,
                 fontSize = 15.sp,
@@ -351,10 +324,10 @@ fun FeedPostCardNew(post: FeedPostNew) {
                 lineHeight = 22.sp,
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
-            // Post Image - Real image with fallback
+
+            // Post Image
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -363,7 +336,6 @@ fun FeedPostCardNew(post: FeedPostNew) {
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 if (post.imageUrl.isNotEmpty()) {
-                    // Real image from URL
                     Box(modifier = Modifier.fillMaxSize()) {
                         AsyncImage(
                             model = post.imageUrl,
@@ -371,8 +343,7 @@ fun FeedPostCardNew(post: FeedPostNew) {
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
-                        
-                        // Overlay gradient at bottom for text visibility
+
                         Box(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
@@ -387,8 +358,7 @@ fun FeedPostCardNew(post: FeedPostNew) {
                                     )
                                 )
                         )
-                        
-                        // Category label
+
                         Text(
                             text = when (post.postImage) {
                                 "stadium" -> "Running Workout"
@@ -403,15 +373,14 @@ fun FeedPostCardNew(post: FeedPostNew) {
                         )
                     }
                 } else {
-                    // Fallback with icon
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(
                                 when (post.postImage) {
-                                    "stadium" -> Color(0xFFE3F2FD) // Light Blue
-                                    "gym" -> Color(0xFFF3E5F5) // Light Purple
-                                    else -> Color(0xFFE8F5E9) // Light Green
+                                    "stadium" -> Color(0xFFE3F2FD)
+                                    "gym" -> Color(0xFFF3E5F5)
+                                    else -> Color(0xFFE8F5E9)
                                 }
                             ),
                         contentAlignment = Alignment.Center
@@ -425,15 +394,15 @@ fun FeedPostCardNew(post: FeedPostNew) {
                                 },
                                 contentDescription = post.postImage,
                                 tint = when (post.postImage) {
-                                    "stadium" -> Color(0xFF1976D2) // Blue
-                                    "gym" -> Color(0xFF9C27B0) // Purple
-                                    else -> Color(0xFF388E3C) // Green
+                                    "stadium" -> Color(0xFF1976D2)
+                                    "gym" -> Color(0xFF9C27B0)
+                                    else -> Color(0xFF388E3C)
                                 },
                                 modifier = Modifier.size(64.dp)
                             )
-                            
+
                             Spacer(modifier = Modifier.height(8.dp))
-                            
+
                             Text(
                                 text = when (post.postImage) {
                                     "stadium" -> "Running Workout"
@@ -447,16 +416,15 @@ fun FeedPostCardNew(post: FeedPostNew) {
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
-            // Action Buttons with animations
+
+            // Action Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Like button
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable { isLiked = !isLiked }
@@ -465,9 +433,7 @@ fun FeedPostCardNew(post: FeedPostNew) {
                         imageVector = if (isLiked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Like",
                         tint = if (isLiked) Color.Red else Color.Gray,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .padding(4.dp)
+                        modifier = Modifier.size(24.dp).padding(4.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -477,19 +443,16 @@ fun FeedPostCardNew(post: FeedPostNew) {
                         fontWeight = if (isLiked) FontWeight.Bold else FontWeight.Normal
                     )
                 }
-                
-                // Comment button
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable { /* Show comments */ }
+                    modifier = Modifier.clickable { }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Comment,
                         contentDescription = "Comment",
                         tint = Color.Gray,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .padding(4.dp)
+                        modifier = Modifier.size(24.dp).padding(4.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -498,14 +461,13 @@ fun FeedPostCardNew(post: FeedPostNew) {
                         color = Color.Gray
                     )
                 }
-                
-                // Share button with pill background
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color(0xFFEEEEEE))
-                        .clickable { /* Share post */ }
+                        .clickable { }
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
                     Icon(
@@ -523,5 +485,13 @@ fun FeedPostCardNew(post: FeedPostNew) {
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeFeedScreenNewPreview() {
+    AthleteConnectTheme {
+        HomeFeedScreenNew()
     }
 }
