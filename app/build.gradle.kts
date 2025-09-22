@@ -102,8 +102,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     
     // Permissions
-    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
-    
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
+
     // Date/Time
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
     

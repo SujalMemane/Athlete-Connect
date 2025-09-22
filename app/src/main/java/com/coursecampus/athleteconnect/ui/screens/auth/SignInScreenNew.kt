@@ -3,9 +3,11 @@ package com.coursecampus.athleteconnect.ui.screens.auth
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -13,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,14 +43,23 @@ fun SignInScreenNew(
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
 
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = MaterialTheme.colorScheme.background
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true // Always light theme
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFF8F9FA),
-                        Color(0xFFE3F2FD)
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.background
                     )
                 )
             )
@@ -55,12 +68,12 @@ fun SignInScreenNew(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(160.dp)
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
-                            PrimaryBlue.copy(alpha = 0.1f),
-                            PrimaryBlue.copy(alpha = 0.05f)
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.03f)
                         )
                     )
                 )
@@ -69,118 +82,86 @@ fun SignInScreenNew(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Enhanced logo section
+            // Logo section with rounded corners and shadow
             Box(
                 modifier = Modifier
                     .size(80.dp)
-                    .background(
-                        brush = Brush.radialGradient(
-                            colors = listOf(
-                                PrimaryBlue,
-                                PrimaryBlueDark
-                            )
-                        ),
-                        shape = CircleShape
-                    ),
+                    .shadow(8.dp, RoundedCornerShape(24.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_logo),
                     contentDescription = "AthleteConnect Logo",
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(64.dp)
+                        .clip(RoundedCornerShape(24.dp))
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
-            // Welcome text
             Text(
                 text = "Welcome Back!",
-                fontSize = 28.sp,
+                fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "Sign in to continue your fitness journey",
-                fontSize = 16.sp,
-                color = Color.Gray,
+                fontSize = 15.sp,
+                color = Color.Black,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Login form card
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                shape = RoundedCornerShape(18.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(24.dp)
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Email Field
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
-                        label = { 
-                            Text(
-                                "Email Address",
-                                color = Color.Gray
-                            ) 
-                        },
+                        label = { Text("Email Address", color = Color.Black) },
                         leadingIcon = {
-                            Icon(
-                                Icons.Default.Email, 
-                                contentDescription = "Email",
-                                tint = PrimaryBlue
-                            )
+                            Icon(Icons.Default.Email, contentDescription = "Email", tint = MaterialTheme.colorScheme.primary)
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = PrimaryBlue,
-                            focusedLabelColor = PrimaryBlue,
-                            cursorColor = PrimaryBlue
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            cursorColor = MaterialTheme.colorScheme.primary
                         ),
                         singleLine = true
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Password Field
                     OutlinedTextField(
                         value = password,
                         onValueChange = { password = it },
-                        label = { 
-                            Text(
-                                "Password",
-                                color = Color.Gray
-                            ) 
-                        },
+                        label = { Text("Password", color = Color.Black) },
                         leadingIcon = {
-                            Icon(
-                                Icons.Default.Lock, 
-                                contentDescription = "Password",
-                                tint = PrimaryBlue
-                            )
+                            Icon(Icons.Default.Lock, contentDescription = "Password", tint = MaterialTheme.colorScheme.primary)
                         },
                         trailingIcon = {
                             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                                 Icon(
                                     imageVector = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                                     contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                                    tint = Color.Gray
+                                    tint = Color.Black
                                 )
                             }
                         },
@@ -189,31 +170,27 @@ fun SignInScreenNew(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = PrimaryBlue,
-                            focusedLabelColor = PrimaryBlue,
-                            cursorColor = PrimaryBlue
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            cursorColor = MaterialTheme.colorScheme.primary
                         ),
                         singleLine = true
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Forgot Password
-                    TextButton(
-                        onClick = onNavigateToForgotPassword,
-                        modifier = Modifier.align(Alignment.End)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Text(
-                            text = "Forgot Password?",
-                            color = PrimaryBlue,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium
-                        )
+                        TextButton(
+                            onClick = { onNavigateToForgotPassword() }
+                        ) {
+                            Text(
+                                text = "Forgot Password?",
+                                color = Color.Black,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
                     }
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Sign In Button
                     Button(
                         onClick = {
                             if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -224,22 +201,20 @@ fun SignInScreenNew(
                         enabled = !isLoading && email.isNotEmpty() && password.isNotEmpty(),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = PrimaryBlue
-                        ),
+                            .height(50.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         if (isLoading) {
                             CircularProgressIndicator(
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 strokeWidth = 2.dp,
                                 modifier = Modifier.size(20.dp)
                             )
                         } else {
                             Text(
                                 text = "Sign In",
-                                fontSize = 18.sp,
+                                fontSize = 17.sp,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
@@ -249,72 +224,53 @@ fun SignInScreenNew(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Divider
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Divider(
-                    modifier = Modifier.weight(1f),
-                    color = Color.LightGray
-                )
+                Divider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
                 Text(
                     text = "OR",
-                    color = Color.Gray,
+                    color = Color.Black,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
-                Divider(
-                    modifier = Modifier.weight(1f),
-                    color = Color.LightGray
-                )
+                Divider(modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // Social Sign In Buttons
             SocialSignInButtonNew(
                 text = "Continue with Google",
                 icon = Icons.Default.Login,
                 onClick = { onSocialSignIn("google") },
-                backgroundColor = Color.White,
-                borderColor = Color.LightGray
+                backgroundColor = MaterialTheme.colorScheme.surface,
+                borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            SocialSignInButtonNew(
-                text = "Continue with Apple",
-                icon = Icons.Default.Phone,
-                onClick = { onSocialSignIn("apple") },
-                backgroundColor = Color.Black,
-                borderColor = Color.Black
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Sign Up Link
             Row(
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = "Don't have an account? ",
-                    color = Color.Gray,
+                    color = Color.Black,
                     fontSize = 16.sp
                 )
                 TextButton(onClick = onNavigateToRegistration) {
                     Text(
                         text = "Sign Up",
-                        color = PrimaryBlue,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
@@ -331,7 +287,7 @@ fun SocialSignInButtonNew(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(50.dp),
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = backgroundColor,
             contentColor = if (backgroundColor == Color.Black) Color.White else Color.Black

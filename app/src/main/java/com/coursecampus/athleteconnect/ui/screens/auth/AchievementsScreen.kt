@@ -17,12 +17,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AchievementsScreen(
     onComplete: () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFFF8F9FA)
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true
+        )
+    }
+
     var currentFitnessLevel by remember { mutableStateOf("") }
     var trainingFrequency by remember { mutableStateOf("") }
     var trainingDuration by remember { mutableStateOf("") }

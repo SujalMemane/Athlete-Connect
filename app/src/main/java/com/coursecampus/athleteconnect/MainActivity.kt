@@ -10,11 +10,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.coursecampus.athleteconnect.ui.navigation.AuthNavigation
 import com.coursecampus.athleteconnect.ui.navigation.FitnessLabNavigation
 import com.coursecampus.athleteconnect.ui.theme.AthleteConnectTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

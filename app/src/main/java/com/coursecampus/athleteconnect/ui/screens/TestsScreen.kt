@@ -284,4 +284,3 @@ private fun getCategoryColor(category: String): Color {
         else -> MaterialTheme.colorScheme.primary
     }
 }
-

@@ -18,12 +18,23 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.ui.theme.FitnessPrimary
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForgotPasswordScreen(
     onNavigateToSignIn: () -> Unit,
     onResetPassword: (email: String, otp: String, newPassword: String) -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFFF8F9FA)
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true
+        )
+    }
+
     var email by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }

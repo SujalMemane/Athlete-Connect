@@ -1,40 +1,76 @@
 package com.coursecampus.athleteconnect.ui.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Assessment
 import androidx.compose.material.icons.filled.Assignment
-import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Work
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.coursecampus.athleteconnect.data.model.*
+import com.coursecampus.athleteconnect.data.model.Difficulty
+import com.coursecampus.athleteconnect.data.model.FitnessTest
 import com.coursecampus.athleteconnect.ui.camera.CameraScreen
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.coursecampus.athleteconnect.ui.screens.DashboardScreen
+import com.coursecampus.athleteconnect.ui.screens.HomeFeedScreenNew
+import com.coursecampus.athleteconnect.ui.screens.LeaderboardScreen
+import com.coursecampus.athleteconnect.ui.screens.LiveAIAnalysisScreen
+import com.coursecampus.athleteconnect.ui.screens.MessagesScreen
+import com.coursecampus.athleteconnect.ui.screens.OpportunitiesScreen
+import com.coursecampus.athleteconnect.ui.screens.ProfileScreenNew
+import com.coursecampus.athleteconnect.ui.screens.SettingsScreen
+import com.coursecampus.athleteconnect.ui.screens.TestDetailScreen
+import com.coursecampus.athleteconnect.ui.screens.TestHistoryScreen
+import com.coursecampus.athleteconnect.ui.screens.TestModeSelectScreen
+import com.coursecampus.athleteconnect.ui.screens.TestsScreenNew
 import com.coursecampus.athleteconnect.ui.screens.TestsViewModel
-import com.coursecampus.athleteconnect.ui.screens.*
 import com.coursecampus.athleteconnect.ui.theme.PrimaryBlue
+import com.coursecampus.athleteconnect.ui.screens.auth.ForgotPasswordScreen
 
 sealed class Screen(
     val route: String,
@@ -47,13 +83,16 @@ sealed class Screen(
     object Dashboard : Screen("dashboard", "Dashboard", Icons.Default.Dashboard)
     object Messages : Screen("messages", "Messages", Icons.Default.Message)
     object Profile : Screen("profile", "Profile", Icons.Default.Person)
-    
+    object ForgotPassword : Screen("forgot_password", "Forgot Password", Icons.Default.Lock)
+
     // Detail screens
     object Camera : Screen("camera/{testId}", "Camera", Icons.Default.Camera)
     object TestDetail : Screen("test_detail/{testId}", "Test Detail", Icons.Default.FitnessCenter)
     object TestModeSelect : Screen("test_mode/{testId}", "Test Mode", Icons.Default.Settings)
     object TestResults : Screen("test_results/{testId}", "Test Results", Icons.Default.Assessment)
-    object OpportunityDetail : Screen("opportunity_detail/{opportunityId}", "Opportunity Detail", Icons.Default.Work)
+    object OpportunityDetail :
+        Screen("opportunity_detail/{opportunityId}", "Opportunity Detail", Icons.Default.Work)
+
     object ChatThread : Screen("chat/{conversationId}", "Chat", Icons.Default.Message)
     object PlayerDetail : Screen("player_detail/{playerId}", "Player Detail", Icons.Default.Person)
     object TestHistory : Screen("test_history", "Test History", Icons.Default.History)
@@ -113,12 +152,17 @@ fun FitnessLabNavigation() {
                 TestDetailScreen(
                     testId = testId,
                     onStartTest = {
-                        navController.navigate(Screen.TestModeSelect.route.replace("{testId}", testId))
+                        navController.navigate(
+                            Screen.TestModeSelect.route.replace(
+                                "{testId}",
+                                testId
+                            )
+                        )
                     },
                     onBackClick = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.TestModeSelect.route) { backStackEntry ->
                 val testId = backStackEntry.arguments?.getString("testId") ?: "1"
                 TestModeSelectScreen(
@@ -132,13 +176,18 @@ fun FitnessLabNavigation() {
                     onBackClick = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.TestResults.route) { backStackEntry ->
                 val testId = backStackEntry.arguments?.getString("testId") ?: "1"
                 LiveAIAnalysisScreen(
                     testId = testId,
                     onRetakeTest = {
-                        navController.navigate(Screen.TestModeSelect.route.replace("{testId}", testId))
+                        navController.navigate(
+                            Screen.TestModeSelect.route.replace(
+                                "{testId}",
+                                testId
+                            )
+                        )
                     },
                     onSaveResults = {
                         navController.navigate(Screen.TestHistory.route)
@@ -149,23 +198,23 @@ fun FitnessLabNavigation() {
                     onBackClick = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.TestHistory.route) {
                 TestHistoryScreen(
                     onBackClick = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.Leaderboard.route) {
                 LeaderboardScreen()
             }
-            
+
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onBackClick = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.Camera.route) { backStackEntry ->
                 val testsViewModel: TestsViewModel = hiltViewModel()
                 val testId = backStackEntry.arguments?.getString("testId") ?: "1"
@@ -188,7 +237,17 @@ fun FitnessLabNavigation() {
                     }
                 )
             }
-            
+
+            composable(Screen.ForgotPassword.route) {
+                ForgotPasswordScreen(
+                    onNavigateToSignIn = { navController.popBackStack() },
+                    onResetPassword = { email, otp, newPassword ->
+                        // Handle password reset logic
+                        navController.popBackStack()
+                    }
+                )
+            }
+
             // Quick test route for FAB
             composable("test_mode/quick_test") {
                 TestModeSelectScreen(
@@ -246,7 +305,7 @@ fun CustomBottomNavigation(
                         }
                     }
                 )
-                
+
                 // Profile tab
                 BottomNavItem(
                     icon = Icons.Default.Person,
@@ -262,7 +321,7 @@ fun CustomBottomNavigation(
                         }
                     }
                 )
-                
+
                 // Test tab
                 BottomNavItem(
                     icon = Icons.Default.Assignment,
@@ -278,10 +337,10 @@ fun CustomBottomNavigation(
                         }
                     }
                 )
-                
+
                 // Empty space for FAB
                 Box(modifier = Modifier.width(56.dp))
-                
+
                 // Dashboard tab
                 BottomNavItem(
                     icon = Icons.Default.Dashboard,
@@ -297,7 +356,7 @@ fun CustomBottomNavigation(
                         }
                     }
                 )
-                
+
                 // Opportunities tab
                 BottomNavItem(
                     icon = Icons.Default.Work,
@@ -313,7 +372,7 @@ fun CustomBottomNavigation(
                         }
                     }
                 )
-                
+
                 // Message tab
                 BottomNavItem(
                     icon = Icons.Default.Chat,
@@ -331,10 +390,10 @@ fun CustomBottomNavigation(
                 )
             }
         }
-        
+
         // FAB in the center
         FloatingActionButton(
-            onClick = { 
+            onClick = {
                 navController.navigate("test_mode/quick_test")
             },
             modifier = Modifier
@@ -364,7 +423,7 @@ fun BottomNavItem(
     onClick: () -> Unit
 ) {
     val color = if (selected) PrimaryBlue else Color.Gray
-    
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -380,17 +439,16 @@ fun BottomNavItem(
             tint = color,
             modifier = Modifier.size(20.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(2.dp))
-        
+
         Text(
             text = label,
             color = color,
             fontSize = 10.sp,
             style = MaterialTheme.typography.labelSmall
         )
-        
+
         // No underline in the second image
     }
 }
-

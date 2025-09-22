@@ -1,5 +1,7 @@
 package com.coursecampus.athleteconnect.ui.screens.auth
 
+import android.app.Activity
+import android.view.View
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +18,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,12 +27,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
+import androidx.core.view.WindowCompat
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SplashScreenNew(
     onNavigateToAuth: () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color.Transparent
+    val activity = LocalContext.current as? Activity
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = false
+        )
+        activity?.window?.let {
+            WindowCompat.setDecorFitsSystemWindows(it, false)
+            it.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        }
+    }
+
     var isVisible by remember { mutableStateOf(false) }
     var showLoading by remember { mutableStateOf(false) }
     

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 data class FitnessGoalNew(
     val name: String,
@@ -39,6 +40,15 @@ data class FitnessGoalNew(
 fun FitnessGoalsScreenNew(
     onContinue: () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFFF8F9FA)
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true
+        )
+    }
+
     var primaryGoal by remember { mutableStateOf<FitnessGoalNew?>(null) }
     var secondaryGoals by remember { mutableStateOf(setOf<FitnessGoalNew>()) }
 

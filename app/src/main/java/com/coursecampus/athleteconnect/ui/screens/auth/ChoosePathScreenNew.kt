@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,6 +31,15 @@ fun ChoosePathScreenNew(
     onAthleteSelected: () -> Unit,
     onCoachSelected: () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFFF8F9FA)
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true
+        )
+    }
+
     var selectedPath by remember { mutableStateOf<String?>(null) }
     
     Box(

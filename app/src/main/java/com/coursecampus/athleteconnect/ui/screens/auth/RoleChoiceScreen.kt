@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coursecampus.athleteconnect.R
 import com.coursecampus.athleteconnect.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 enum class UserRole {
     ATHLETE,
@@ -35,6 +36,15 @@ enum class UserRole {
 fun RoleChoiceScreen(
     onRoleSelected: (UserRole) -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFFF8F9FA)
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = true
+        )
+    }
+
     var selectedRole by remember { mutableStateOf<UserRole?>(null) }
     var isVisible by remember { mutableStateOf(false) }
 
